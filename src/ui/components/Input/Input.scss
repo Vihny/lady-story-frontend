@@ -1,0 +1,37 @@
+.container-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 6px;
+
+    input {
+        text-decoration: none;
+        border: 1px solid #FF698D;
+        background-color: #fff;
+        border-radius: 12px;
+        width: 352px;
+        height: 40px;
+    
+        &::placeholder {
+            font-size: 16px;
+            color: #9F9F9F;
+            padding-left: 12px;
+        }
+    
+        &:focus {
+            outline: none;
+        }
+    }
+    
+    label {
+        display: flex;
+        justify-content: flex-start;
+        font-size: 14px;
+        font-weight: 600;
+        margin-left: 6px;
+    
+        span {
+            color: #C54545;
+        }
+    }
+}
