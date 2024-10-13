@@ -1,9 +1,9 @@
-import Input from "../../ui/components/Input/Input";
+import Produto from "../Produto/Produto";
 
 function Home() {
     return (
         <>
-          <Input label='Nome do Produto' placeholder='Ex: Camisa' type='text' />
+          <Produto />
         </>
     )
 }
