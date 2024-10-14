@@ -1,5 +1,6 @@
+import Button from "../../ui/components/Button/Button";
 import Cadastro from "../../ui/components/cadastro/cadastro";
-import Input from "../../ui/components/input/Input";
+import Input from "../../ui/components/input/input";
 import SideNav from "../../ui/components/sidenav/sidenav";
 import './Produto.scss'
 
@@ -16,6 +17,8 @@ function Produto() {
                 <Input label='Cor do Produto' placeholder='Ex: Verde' type='text' />
                 <Input label='Tamanho do Produto' placeholder='Ex: P' type='text' />
                 <Input label='Preço do Produto' placeholder='Ex: $80,00' type='text' />
+
+                <Button icon="Activity" title="Cadastrar" className="item-ultimo"/>
             </Cadastro>
         </div>
         </>

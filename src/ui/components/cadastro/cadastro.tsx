@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import "./cadastro.scss"
 
 interface CadastroProps {
-    children: ReactNode,
+    children?: ReactNode,
     text: string,
     modulo: string
 }
