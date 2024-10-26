@@ -4,7 +4,7 @@ import Input from "../../ui/components/Input/Input";
 import SideNav from "../../ui/components/sidenav/sidenav";
 import './CadrastrarCliente.scss'
 
-function Cliente() {
+function CadastrarCliente() {
     return (
         <>
         <div className="container-cliente">
@@ -29,4 +29,4 @@ function Cliente() {
     )
 }
 
-export default Cliente;
+export default CadastrarCliente;

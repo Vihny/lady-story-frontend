@@ -2,9 +2,9 @@ import Button from "../../ui/components/Button/Button";
 import Cadastro from "../../ui/components/cadastro/cadastro";
 import Input from "../../ui/components/Input/Input";
 import SideNav from "../../ui/components/sidenav/sidenav";
-import './Produto.scss'
+import './CadrastrarProduto.scss'
 
-function Produto() {
+function CadastrarProduto() {
     return (
         <>
         <div className="container-produtos">
@@ -25,4 +25,4 @@ function Produto() {
     )
 }
 
-export default Produto;
+export default CadastrarProduto;
