@@ -1,0 +1,33 @@
+.container-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid #E8E8E8;
+    padding-bottom: 22px;
+
+    .data {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        span {
+            font-size: 16px;
+            font-weight: 500;
+            color: #9F9F9F;
+        }
+    }
+
+    .nome {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+
+        p {
+            font-size: 20px;
+            font-weight: 600;
+            color: #191919;
+        }
+    }
+}

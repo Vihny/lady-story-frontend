@@ -18,7 +18,7 @@ function Produto() {
                 <Input label='Tamanho do Produto' placeholder='Ex: P' type='text' />
                 <Input label='Preço do Produto' placeholder='Ex: $80,00' type='text' />
 
-                <Button icon="Activity" title="Cadastrar" className="item-ultimo"/>
+                <Button icon="PlusCircle" title="Cadastrar" className="item-ultimo"/>
             </Cadastro>
         </div>
         </>
