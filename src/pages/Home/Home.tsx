@@ -1,9 +1,10 @@
-import Produto from "../produto/produto";
+import SideNav from "../../ui/components/sidenav/sidenav";
 
 function Home() {
     return (
         <>
-          <Produto />
+          <SideNav />
+          <p style={{textAlign: "center"}}>home</p>
         </>
     )
 }

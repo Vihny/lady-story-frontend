@@ -1,25 +1,37 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import "./cadastro.scss"
+import { getCustomer } from "../../../data/services/customer.service";
+import Header from "../header/header";
 
-interface CadastroProps {
+interface CadastrarProdutoProps {
     children?: ReactNode,
-    text: string,
-    modulo: string
+    text?: string,
+    modulo?: string
 }
 
-function Cadastro({
+function CadastrarProduto({
     children,
     text,
     modulo
-}: CadastroProps) {
+}: CadastrarProdutoProps) {
+    useEffect(() => {
+        const dados = getCustomer();
+        console.log(dados)
+    }, []);
+
     return (
         <>
-        <div className="container-cadastro">
-            <h1>{text}</h1>
-            <div className="container">
-                <h2>{modulo}</h2>
-                <div className="content-input">
-                    {children}
+        <div style={{width: "100%"}}>
+            <Header /> 
+            <div className="container-cadastro">
+                <h1>{text}</h1>
+                <div className="content">
+                    <div className="container">
+                        <h2>{modulo}</h2>
+                        <div className="content-input">
+                            {children}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -27,4 +39,4 @@ function Cadastro({
     )
 }
 
-export default Cadastro;
+export default CadastrarProduto;

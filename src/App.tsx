@@ -1,11 +1,10 @@
 import './App.css'
-import Home from './pages/home/home'
+import Rotas from './routes/router'
 
 function App() {
-
   return (
     <>
-      <Home/>
+      <Rotas/>
     </>
   )
 }
