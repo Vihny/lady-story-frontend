@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import "./cadastro.scss"
 import { getCustomer } from "../../../data/services/customer.service";
-import Header from "../header/header";
+import Header from "../header/Header";
 
 interface CadastrarProdutoProps {
     children?: ReactNode,
@@ -22,7 +22,7 @@ function CadastrarProduto({
     return (
         <>
         <div style={{width: "100%"}}>
-            <Header /> 
+                <Header /> 
             <div className="container-cadastro">
                 <h1>{text}</h1>
                 <div className="content">

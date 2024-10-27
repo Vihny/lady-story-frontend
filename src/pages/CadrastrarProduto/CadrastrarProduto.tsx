@@ -1,6 +1,6 @@
 import Button from "../../ui/components/Button/Button";
 import Cadastro from "../../ui/components/cadastro/cadastro";
-import Input from "../../ui/components/Input/Input";
+import Input from "../../ui/components/input/input";
 import SideNav from "../../ui/components/sidenav/sidenav";
 import './CadrastrarProduto.scss'
 

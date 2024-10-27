@@ -1,13 +1,16 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Produto from "../pages/produto/produto";
-import Home from "../pages/home/home";
+import CadastrarProduto from "../pages/CadrastrarProduto/CadrastrarProduto";
+import Home from "../pages/home/Home";
+import CadastrarCliente from "../pages/CadrastrarCliente/CadrastrarCliente";
+
 
 const Rotas = () => {
   return(
       <BrowserRouter>
       <Routes>
-          <Route path="/produtos" element={ <Produto /> } />
           <Route path="/" element={ <Home /> } />
+          <Route path="/produtos" element={ <CadastrarProduto /> } />
+          <Route path="/clientes" element={ <CadastrarCliente /> } />
       </Routes>
       </BrowserRouter>
   )
