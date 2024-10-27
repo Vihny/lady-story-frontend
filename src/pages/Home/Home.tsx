@@ -1,11 +1,11 @@
-import Cliente from "../CadrastrarCliente/CadrastrarCliente";
-//import Produto from "../Produto/Produto";
+import CadastrarProduto from "../CadrastrarProduto/CadrastrarProduto";
+
 
 
 function Home() {
     return (
         <>
-          <Cliente/>
+          <CadastrarProduto/>
         </>
     )
 }
