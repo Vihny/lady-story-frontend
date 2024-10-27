@@ -1,28 +1,30 @@
-import './header.scss';
-import { ChevronsRight } from 'react-feather';
-import { Bell } from 'react-feather';
+import './header.scss'
+import { ChevronsRight, Bell } from 'react-feather';
 
-function Header() {
-    const dataAtual = new Date().toLocaleDateString('pt-BR', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      });
 
-    return (
-        <>
-        <div className="container-header">
-            <div className='data'>
-                <ChevronsRight color='#9F9F9F' />
-                <span>{dataAtual}</span>
-            </div>
-            <div className='nome'>
-                <p>Bem vindo, nome</p>
-                <Bell style={{cursor: 'pointer'}} color='#666666' />
-            </div>
-        </div>
-        </>
-    )
+interface headerProps {
+   date: Date;
+   user: string
+}
+
+function Header({date, user}: headerProps){
+   return(
+      <>
+      <div className="container-header">
+         <div className='data-container'>
+            <ChevronsRight  size={16} color='#666666'/>
+            <p>{date.toLocaleDateString()}</p>
+         </div>
+         <div className='user-container'>
+             <p>Bem vindo(a), {user}</p>
+             <Bell size={20} color='#191919' />
+
+         </div>
+      </div>
+      </>
+   )
+   
 }
 
 export default Header;
+
