@@ -1,25 +1,20 @@
-import { useNavigate } from 'react-router-dom';
-import Button from '../button/button';
 import './pesquisa.scss';
 
-function Pesquisa() {
-    const navigate = useNavigate();
+interface PesquisaProps {
+    title?: string,
+    placeholder?: string,
+    searchPlaceholder?: string
+}
 
-    const handleClick = () => {
-        navigate('/cadastrar-produto');
-    };
-    
+function Pesquisa({title, searchPlaceholder, placeholder}: PesquisaProps) {
     return (
        <>
         <div className='container-pesquisa'>
-            <p>Produtos</p>
+            <p>{title}</p>
 
-            <div className='container-pesquisa-inputs'>
-                <div className='inputs'>
-                    <input type="text" placeholder='Pesquisar' />
-                    <input type="text" placeholder='Tamanho' />
-                </div>
-                <Button title='Novo Produto' icon='Plus' onPress={handleClick} />
+            <div className='inputs'>
+                <input type="text" placeholder={searchPlaceholder} />
+                <input type="text" placeholder={placeholder} />
             </div>
         </div>
        </>

@@ -9,33 +9,27 @@
         color: #878787;
     }
 
-    .container-pesquisa-inputs {
+    .inputs {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        gap: 12px;
+        margin-top: 8px;
 
-        .inputs {
-            display: flex;
-            gap: 12px;
-            margin-top: 8px;
-
-            input {
-                text-decoration: none;
-                border: none;
-                background-color: #fff;
-                border-radius: 12px;
-                width: 352px;
-                height: 40px;
-                padding: 0 12px;
-            
-                &::placeholder {
-                    font-size: 14px;
-                    color: #9F9F9F;
-                }
-            
-                &:focus {
-                    outline: none;
-                }
+        input {
+            text-decoration: none;
+            border: none;
+            background-color: #fff;
+            border-radius: 12px;
+            width: 352px;
+            height: 40px;
+            padding: 0 12px;
+        
+            &::placeholder {
+                font-size: 14px;
+                color: #9F9F9F;
+            }
+        
+            &:focus {
+                outline: none;
             }
         }
     }

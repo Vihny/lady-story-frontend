@@ -23,7 +23,7 @@ function SideNav() {
                 </div>
                 <div className="nav-icon">
                     <User size={24} color='#ffffff'/>
-                    <Link to='/cadastrar-cliente'>Clientes</Link>
+                    <Link to='/clientes'>Clientes</Link>
                 </div>  
                 <div className="nav-icon">
                     <Settings size={24} color='#ffffff'/>

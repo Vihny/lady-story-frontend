@@ -1,33 +1,32 @@
-import './produtos.scss';
+import './clientes.scss';
 import { useEffect, useState } from "react";
 import Table, { Coluna } from "../../ui/components/table/table";
+import { getCustomer } from "../../data/services/customer.service";
 import Header from "../../ui/components/header/Header";
 import { Box, Pagination } from "@mui/material";
 import SideNav from '../../ui/components/sidenav/sidenav';
 import Pesquisa from '../../ui/components/pesquisa/pesquisa';
-import { getProduct } from '../../data/services/product.service';
 import Button from '../../ui/components/button/button';
 import { useNavigate } from 'react-router-dom';
 
-function Produto() {
+function Cliente() {
     const [data, setDada] = useState<Record<string, string | number>[]>([]);
     const [selectedTable, setSelectedTable] = useState(0);
 
     useEffect(() => {
-        const getProdutos = async () => {
-            const result = await getProduct();
+        const getClientes = async () => {
+            const result = await getCustomer();
             setDada(result);
         }
 
-        getProdutos();
+        getClientes();
     }, []);
 
     const colunas: Coluna[] = [
-        { header: 'Nome do produto', accessor: 'nome' },
-        { header: 'Tamanho', accessor: 'tamanho' },
-        { header: 'Cor', accessor: 'cor' },
-        { header: 'Pagamento', accessor: 'pagamento' },
-        { header: 'Preço', accessor: 'preco' },
+        { header: 'Nome do cliente', accessor: 'nome' },
+        { header: 'Email', accessor: 'email' },
+        { header: 'Telefone', accessor: 'telefone' },
+        { header: 'Idade', accessor: 'idade' },
     ];
 
     const tableLabels = ['Todos', 'Receitas', 'Despesas'];
@@ -41,18 +40,18 @@ function Produto() {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/cadastrar-produto');
+        navigate('/cadastrar-cliente');
     };
        
     return (
        <>
-        <div className='container-produtos'>
+        <div className='container-clientes'>
             <SideNav />
             <div>
                 <Header />
                 <div className='container-pesquisa-inputs'>
-                    <Pesquisa title='Produtos' searchPlaceholder='Pesquisar' placeholder='Tamanho' />
-                    <Button className='botao-inputs' title='Novo produto' icon='Plus' onPress={handleClick} />
+                    <Pesquisa title='Clientes' searchPlaceholder='Pesquisar' placeholder='Telefone' />
+                    <Button className='botao-inputs' title='Novo cliente' icon='Plus' onPress={handleClick} />
                 </div>
                     <div className="container-stepper">
                     {tableLabels.map((label, index) => (
@@ -89,4 +88,4 @@ function Produto() {
     )
 }
  
-export default Produto;
+export default Cliente;
