@@ -2,6 +2,7 @@ import { Outlet, Link } from "react-router-dom";
 import "./sidenav.scss"
 import { Grid } from 'react-feather';
 import { Briefcase } from 'react-feather';
+import { User } from 'react-feather';
 import { Settings } from 'react-feather';
 import { LogOut } from 'react-feather';
 
@@ -20,6 +21,10 @@ function SideNav() {
                     <Briefcase size={24} color='#ffffff'/>
                     <Link to='/produtos'>Produtos</Link>
                 </div>
+                <div className="nav-icon">
+                    <User size={24} color='#ffffff'/>
+                    <Link to='/cadastrar-cliente'>Clientes</Link>
+                </div>  
                 <div className="nav-icon">
                     <Settings size={24} color='#ffffff'/>
                     <Link to='/settings'>Settings</Link>

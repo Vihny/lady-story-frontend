@@ -1,4 +1,4 @@
-import "./Button.scss";
+import "./button.scss";
 import * as Icons from 'react-feather';
 
 interface ButtonProps {

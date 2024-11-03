@@ -1,8 +1,8 @@
-import Button from "../../ui/components/Button/Button";
+import Button from "../../ui/components/button/button";
 import Cadastro from "../../ui/components/cadastro/cadastro";
 import Input from "../../ui/components/input/input";
 import SideNav from "../../ui/components/sidenav/sidenav";
-import './CadrastrarCliente.scss'
+import './cadrastrar-cliente.scss'
 
 function CadastrarCliente() {
     return (

@@ -1,0 +1,42 @@
+.container-pesquisa {
+    display: flex;
+    flex-direction: column;
+    margin: 22px;
+
+    p {
+        font-size: 22px;
+        font-weight: 400;
+        color: #878787;
+    }
+
+    .container-pesquisa-inputs {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .inputs {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+
+            input {
+                text-decoration: none;
+                border: none;
+                background-color: #fff;
+                border-radius: 12px;
+                width: 352px;
+                height: 40px;
+                padding: 0 12px;
+            
+                &::placeholder {
+                    font-size: 14px;
+                    color: #9F9F9F;
+                }
+            
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+    }
+}

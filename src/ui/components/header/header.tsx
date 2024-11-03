@@ -1,5 +1,6 @@
 import './header.scss'
 import { ChevronsRight, Bell } from 'react-feather';
+import Badge from '@mui/material/Badge';
 
 interface headerProps {
    user?: string
@@ -21,8 +22,10 @@ function Header({user}: headerProps){
          </div>
          <div className='user'>
              <p>Bem vindo(a), {user}</p>
-             <Bell size={20} color='#9F9F9F' />
-         </div>
+             <Badge variant="dot" color="secondary" sx={{cursor: 'pointer'}} >
+               <Bell size={20} color='#9F9F9F'/>
+            </Badge>
+         </div>  
       </div>
       </>
    )

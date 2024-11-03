@@ -1,0 +1,29 @@
+.container-produtos {
+    display: flex;
+
+    .container-paginator {
+        display: flex;
+        justify-content: center;
+        margin-top: 22px;
+    }
+}
+
+.container-stepper {
+    display: flex;
+    gap: 26px;
+    margin-left: 28px;
+
+    .button-stepper {
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: none;
+        background-color: transparent;
+        border: none;
+        width: 80px;
+    
+        &:hover {
+            background-color: 'transparent';
+            box-shadow: none;
+        }
+    }
+}
