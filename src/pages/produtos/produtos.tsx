@@ -23,11 +23,13 @@ function Produto() {
     }, []);
 
     const colunas: Coluna[] = [
-        { header: 'Nome do produto', accessor: 'nome' },
-        { header: 'Tamanho', accessor: 'tamanho' },
-        { header: 'Cor', accessor: 'cor' },
-        { header: 'Pagamento', accessor: 'pagamento' },
-        { header: 'Preço', accessor: 'preco' },
+        { header: 'Nome do produto', accessor: 'name' },
+        { header: 'Tamanho', accessor: 'syze' },
+        { header: 'Tipo', accessor: 'type' },
+        { header: 'Cor', accessor: 'color' },
+        { header: 'Modelo', accessor: 'model' },
+        { header: 'Marca', accessor: 'brand' },
+        { header: 'Preço', accessor: 'price' },
     ];
 
     const tableLabels = ['Todos', 'Receitas', 'Despesas'];

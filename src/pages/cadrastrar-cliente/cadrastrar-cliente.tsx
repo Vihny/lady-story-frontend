@@ -1,4 +1,5 @@
 import './cadrastrar-cliente.scss';
+import 'react-toastify/dist/ReactToastify.css';
 import { useForm } from 'react-hook-form';
 import { setCustomer } from '../../data/services/customer.service';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,7 +11,6 @@ import Button from "../../ui/components/button/button";
 import Cadastro from "../../ui/components/cadastro/cadastro";
 import Input from "../../ui/components/input/input";
 import SideNav from "../../ui/components/sidenav/sidenav";
-import 'react-toastify/dist/ReactToastify.css';
 
 function CadastrarCliente() {
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
@@ -31,7 +31,7 @@ function CadastrarCliente() {
     return (
         <>
         <form className="container-cliente">
-        <ToastContainer />
+            <ToastContainer />
             <SideNav />
             <Cadastro text="Gerenciamento de Clientes" modulo="Cadastrar Cliente">
                 <Input label='Nome do Cliente' placeholder='Ex.: Maria Santos Silva' type='text' {...register('name')} error={errors.name?.message} />
