@@ -2,7 +2,7 @@ import './clientes.scss';
 import { useEffect, useState } from "react";
 import Table, { Coluna } from "../../ui/components/table/table";
 import { getCustomer } from "../../data/services/customer.service";
-import Header from "../../ui/components/header/Header";
+import Header from "../../ui/components/header/header";
 import { Box, Pagination } from "@mui/material";
 import SideNav from '../../ui/components/sidenav/sidenav';
 import Pesquisa from '../../ui/components/pesquisa/pesquisa';
@@ -23,10 +23,11 @@ function Cliente() {
     }, []);
 
     const colunas: Coluna[] = [
-        { header: 'Nome do cliente', accessor: 'nome' },
+        { header: 'Nome', accessor: 'name' },
         { header: 'Email', accessor: 'email' },
-        { header: 'Telefone', accessor: 'telefone' },
-        { header: 'Idade', accessor: 'idade' },
+        { header: 'CPF', accessor: 'cpf' },
+        { header: 'Data de Nascimento', accessor: 'birthdate' },
+        { header: 'Cidade', accessor: 'city' },
     ];
 
     const tableLabels = ['Todos', 'Receitas', 'Despesas'];

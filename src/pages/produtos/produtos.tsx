@@ -1,7 +1,7 @@
 import './produtos.scss';
 import { useEffect, useState } from "react";
 import Table, { Coluna } from "../../ui/components/table/table";
-import Header from "../../ui/components/header/Header";
+import Header from "../../ui/components/header/header";
 import { Box, Pagination } from "@mui/material";
 import SideNav from '../../ui/components/sidenav/sidenav';
 import Pesquisa from '../../ui/components/pesquisa/pesquisa';
@@ -54,9 +54,9 @@ function Produto() {
                     <Pesquisa title='Produtos' searchPlaceholder='Pesquisar' placeholder='Tamanho' />
                     <Button className='botao-inputs' title='Novo produto' icon='Plus' onPress={handleClick} />
                 </div>
-                    <div className="container-stepper">
+                    <div className='container-stepper'>
                     {tableLabels.map((label, index) => (
-                        <button className="button-stepper"
+                        <button className='button-stepper'
                             key={label}
                             onClick={() => setSelectedTable(index)}
                             style={{color: selectedTable === index ? '#FF698D' : '#525256', }}>
@@ -70,10 +70,10 @@ function Produto() {
                 <div className='container-paginator'>
                     <Pagination 
                         count={10} 
-                        color="secondary" 
-                        variant="outlined" 
+                        color='secondary'
+                        variant='outlined'
                         size='small' 
-                        shape="circular"
+                        shape='circular'
                         sx={{
                             '& .MuiPaginationItem-root': {
                                 borderRadius: '50%',

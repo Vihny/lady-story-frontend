@@ -1,44 +1,45 @@
-import './Input.scss'
-import { ChangeEventHandler } from "react";
+import './input.scss'
+import { ChangeEventHandler, forwardRef } from "react";
 
-interface InputProps {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     type?: string;
     name?: string;
     maxLength?: number;
     onChange?: ChangeEventHandler<HTMLInputElement>;
     value?: string;
-    ref?: string;
     placeholder?: string;
     label?: string;
+    error?: string;
 }
 
-function Input({
-    type,
-    name,
-    maxLength,
-    onChange,
-    value,
-    ref,
-    placeholder,
-    label
-}: InputProps) {
-
+const Input = forwardRef<HTMLInputElement, InputProps>((
+    {
+        type,
+        name,
+        maxLength,
+        onChange,
+        value,
+        placeholder,
+        label,
+        error,
+        ...props
+    }, ref) => {
     return (
-        <>
-            <div className='container-input'>
-                <label>{label} <span>*</span></label>
-                <input 
-                    type={type} 
-                    name={name} 
-                    maxLength={maxLength} 
-                    onChange={onChange} 
-                    value={value} 
-                    ref={ref} 
-                    placeholder={placeholder} 
-                />
-            </div>
-        </>
-    )
-}
+        <div className='container-input'>
+            <label>{label} <span>*</span></label>
+            <input 
+                type={type} 
+                name={name} 
+                maxLength={maxLength} 
+                onChange={onChange} 
+                value={value} 
+                ref={ref}
+                placeholder={placeholder} 
+                {...props}
+            />
+            {error && <span>{error}</span>}
+        </div>
+    );
+});
 
 export default Input;

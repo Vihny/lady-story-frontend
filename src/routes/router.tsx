@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CadastrarProduto from "../pages/cadrastrar-produto/cadrastrar-produto";
-import Home from "../pages/home/Home";
 import CadastrarCliente from "../pages/cadrastrar-cliente/cadrastrar-cliente";
 import Produto from "../pages/produtos/produtos";
 import Cliente from "../pages/clientes/clientes";
+import Home from "../pages/home/Home";
 
 
 const Rotas = () => {

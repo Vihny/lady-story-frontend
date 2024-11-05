@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import "./cadastro.scss"
 import { getCustomer } from "../../../data/services/customer.service";
-import Header from "../header/Header";
+import Header from "../header/header";
 
 interface CadastrarProdutoProps {
     children?: ReactNode,

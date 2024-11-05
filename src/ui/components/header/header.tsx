@@ -2,11 +2,11 @@ import './header.scss'
 import { ChevronsRight, Bell } from 'react-feather';
 import Badge from '@mui/material/Badge';
 
-interface headerProps {
+interface HeaderProps {
    user?: string
 }
 
-function Header({user}: headerProps){
+function Header({user}: HeaderProps){
    const dataAtual = new Date().toLocaleDateString('pt-BR', {
       day: 'numeric',
       month: 'long',

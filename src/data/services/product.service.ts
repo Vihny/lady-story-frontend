@@ -1,3 +1,4 @@
+import { Product } from "../../interface/product.interface";
 import api from "./api";
 
 export async function getProduct() {
@@ -6,8 +7,8 @@ export async function getProduct() {
     return response.data;
 }
 
-export async function setProduct() {
-    const response = await api.post('product/create');
+export async function setProduct(data: Product) {
+    const response = await api.post('product/create', data);
     console.log('deu certooo', response)
     return response;
 }
