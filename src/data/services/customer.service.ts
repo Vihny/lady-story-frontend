@@ -1,9 +1,14 @@
 import { Customer } from "../../interface/customer.interface";
+import { Filters } from "../../interface/filters/customer-filters.interface";
 import api from "./api";
 
-export async function getCustomer() {
-    const response = await api.get('customer/all');
-    console.log('deu certooo', response)
+export async function getCustomer(filters: Filters) {
+    const response = await api.get('customer/all', {params: {...filters}});
+    return response.data;
+}
+
+export async function getCustomerById(id: number | string) {
+    const response = await api.get(`customer/one/${id}`);
     return response.data;
 }
 
@@ -12,8 +17,8 @@ export async function setCustomer(data: Customer) {
     return response;
 }
 
-export async function updateCustomer(id: number) {
-    const response = await api.put(`customer/update/${id}`);
+export async function updateCustomer(id: number | string, data: Customer) {
+    const response = await api.patch(`customer/update/${id}`, data);
     return response;
 }
 

@@ -1,26 +1,38 @@
 import './clientes.scss';
 import { useEffect, useState } from "react";
 import Table, { Coluna } from "../../ui/components/table/table";
-import { getCustomer } from "../../data/services/customer.service";
+import { deleteCustomer, getCustomer } from "../../data/services/customer.service";
 import Header from "../../ui/components/header/header";
 import { Box, Pagination } from "@mui/material";
 import SideNav from '../../ui/components/sidenav/sidenav';
 import Pesquisa from '../../ui/components/pesquisa/pesquisa';
 import Button from '../../ui/components/button/button';
 import { useNavigate } from 'react-router-dom';
+import { Filters } from '../../interface/filters/customer-filters.interface';
 
 function Cliente() {
-    const [data, setDada] = useState<Record<string, string | number>[]>([]);
+    const [data, setData] = useState<Record<string, string | number>[]>([]);
     const [selectedTable, setSelectedTable] = useState(0);
+    const [filters, setFilters] = useState<Filters>({ name: '', cpf: '' });
 
     useEffect(() => {
         const getClientes = async () => {
-            const result = await getCustomer();
-            setDada(result);
-        }
+            try {
+                const searchFilters = {
+                    ...(filters.name ? { name: filters.name } : {}),
+                    ...(filters.cpf ? { cpf: filters.cpf } : {})
+                };
 
+                const result = await getCustomer(searchFilters);
+                setData(result);
+            } catch (error) {
+                console.error('Erro ao buscar clientes: ', error);
+            }
+        };
+      
         getClientes();
-    }, []);
+
+    }, [filters]);
 
     const colunas: Coluna[] = [
         { header: 'Nome', accessor: 'name' },
@@ -39,19 +51,45 @@ function Cliente() {
     ];
 
     const navigate = useNavigate();
-
     const handleClick = () => {
         navigate('/cadastrar-cliente');
     };
+
+    const handleEdit = (id: number | string) => {
+        navigate(`/cadastrar-cliente/${id}`);
+    };
+
+    const deleteCliente = async (id: number | string): Promise<void> => {
+        if (typeof id === 'number') {
+            try {
+                setData((prevData) => prevData.filter((item) => item.id !== id));
+                await deleteCustomer(id);
+            } catch (error) {
+                console.error("Erro ao deletar cliente:", error);
+            }
+        }
+    };
+
+    const handleFilterChange = (field: keyof Filters, value: string) => {
+        setFilters((prevFilters) => ({ ...prevFilters, [field]: value }));
+    };
        
-    return (
+    return (    
        <>
         <div className='container-clientes'>
             <SideNav />
             <div>
                 <Header />
                 <div className='container-pesquisa-inputs'>
-                    <Pesquisa title='Clientes' searchPlaceholder='Pesquisar' placeholder='Telefone' />
+                    <Pesquisa 
+                        title='Clientes' 
+                        placeholder='CPF' 
+                        value={filters.cpf}
+                        onChange={(e) => handleFilterChange('cpf', e.target.value)}
+                        searchPlaceholder='Pesquisar' 
+                        searchValue={filters.name}
+                        searchChange={(e) => handleFilterChange('name', e.target.value)}
+                    />
                     <Button className='botao-inputs' title='Novo cliente' icon='Plus' onPress={handleClick} />
                 </div>
                     <div className="container-stepper">
@@ -65,7 +103,7 @@ function Cliente() {
                 ))}    
                     </div>
                 <Box>
-                    <Table columns={colunas} data={filterFunctions[selectedTable]()} />
+                    <Table titleModal='cliente' columns={colunas} data={filterFunctions[selectedTable]()} onDelete={deleteCliente} onEdit={handleEdit} />
                 </Box>
                 <div className='container-paginator'>
                     <Pagination 

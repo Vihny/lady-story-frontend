@@ -1,4 +1,5 @@
 export interface Customer {
+    id?: number | string
     name?: string,
     cpf?: string,
     email?: string,

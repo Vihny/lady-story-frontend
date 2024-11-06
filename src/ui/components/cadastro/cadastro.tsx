@@ -1,6 +1,5 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import "./cadastro.scss"
-import { getCustomer } from "../../../data/services/customer.service";
 import Header from "../header/header";
 
 interface CadastrarProdutoProps {
@@ -14,11 +13,6 @@ function CadastrarProduto({
     text,
     modulo
 }: CadastrarProdutoProps) {
-    useEffect(() => {
-        const dados = getCustomer();
-        console.log(dados)
-    }, []);
-
     return (
         <>
         <div style={{width: "100%"}}>

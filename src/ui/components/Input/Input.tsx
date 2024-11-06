@@ -37,7 +37,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((
                 placeholder={placeholder} 
                 {...props}
             />
-            {error && <span>{error}</span>}
+            {error && <span className='error'>{error}</span>}
         </div>
     );
 });
