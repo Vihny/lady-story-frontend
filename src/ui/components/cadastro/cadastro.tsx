@@ -15,16 +15,14 @@ function CadastrarProduto({
 }: CadastrarProdutoProps) {
     return (
         <>
-        <div style={{width: "100%"}}>
-                <Header /> 
+        <div>
+            <Header /> 
             <div className="container-cadastro">
                 <h1>{text}</h1>
                 <div className="content">
-                    <div className="container">
-                        <h2>{modulo}</h2>
-                        <div className="content-input">
-                            {children}
-                        </div>
+                    <h2>{modulo}</h2>
+                    <div className="content-input">
+                        {children}
                     </div>
                 </div>
             </div>

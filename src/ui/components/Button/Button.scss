@@ -1,19 +1,22 @@
 button {
-   background-color: #FF698D;
-   width: 224px;
-   border: none;
-   border-radius: 4px;
-   padding: 8px;
-   align-items: center;
-   gap: 12px;
-   display: flex;
-   cursor: pointer;
-   flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FF698D;
+  width: 224px;
+  border: none;
+  border-radius: 4px;
+  padding: 8px;
+  align-items: center;
+  gap: 4px;
+  display: flex;
+  cursor: pointer;
+  flex-direction: row;
 
    
-    span{
-      color: #ffffff;
-      font-size: 16px;
-     }
+  span {
+    color: #ffffff;
+    font-size: 16px;
+    }
 
 }

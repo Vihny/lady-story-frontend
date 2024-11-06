@@ -12,7 +12,7 @@ function Button({title, onPress, icon, className}: ButtonProps) {
    const Icon = Icons[icon]
    return <>
          <button onClick={onPress} className={className}>
-            <Icon size={24} color='#ffffff'/>
+            <Icon size={18} color='#ffffff'/>
             <span>{title}</span>         
          </button>
    </>

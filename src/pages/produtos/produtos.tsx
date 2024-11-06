@@ -36,7 +36,7 @@ function Produto() {
 
     const colunas: Coluna[] = [
         { header: 'Nome do produto', accessor: 'name' },
-        { header: 'Tamanho', accessor: 'syze' },
+        { header: 'Tamanho', accessor: 'size' },
         { header: 'Tipo', accessor: 'type' },
         { header: 'Cor', accessor: 'color' },
         { header: 'Modelo', accessor: 'model' },

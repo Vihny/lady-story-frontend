@@ -5,26 +5,26 @@
     height: 500px;
     width: 1116px;
     border-radius: 16px;
-    margin: 4px 26px;
+    margin-left: 26px;
+    margin-right: 16px;
 
     table {
         width: 100%;
-
+        
         tr {
             color: #000;
             font-size: 16px;
             font-weight: 600;
-            border-bottom: 1px solid #E8E8E8;
             
             th {
-                padding: 16px 42px;
+                padding: 16px 32px;
                 text-align: left;
                 border-bottom: 1px solid #E8E8E8;
             }
 
             td {
                 font-weight: 400;
-                padding: 0px 42px;
+                padding: 0px 32px;
                 border-bottom: 1px solid #E8E8E8;
             }
         }
