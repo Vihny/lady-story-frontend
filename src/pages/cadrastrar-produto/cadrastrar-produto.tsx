@@ -39,17 +39,19 @@ function CadastrarProduto() {
     }
 
     const updateProduto = async (data: Product) => {
-        if (id) await updateProduct(id, data);
+        if (id) return await updateProduct(id, data);
     }
 
     const onSubmit = async (data: Product) => {
         if(id) {
-            await updateProduto(data);
+            const response = await updateProduto(data);
+            console.log(response)
             toast.success('Produto atualizado com sucesso!');
             navigate('/produtos');
         } else {
             await setProduto(data);
             toast.success('Produto cadastrado com sucesso!');
+            navigate('/produtos');
             reset();
         }
     }

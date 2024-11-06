@@ -15,7 +15,7 @@ function SideNav() {
             <div className="link-navs">
                 <div className="nav-icon">
                     <Grid size={24} color='#ffffff'/>
-                    <Link to='/dashboard'>Dashboard</Link>
+                    <Link to='/'>Dashboard</Link>
                 </div>
                 <div className="nav-icon">
                     <Briefcase size={24} color='#ffffff'/>
@@ -27,7 +27,7 @@ function SideNav() {
                 </div>  
                 <div className="nav-icon">
                     <Settings size={24} color='#ffffff'/>
-                    <Link to='/settings'>Settings</Link>
+                    <Link to='/'>Settings</Link>
                 </div> 
                 <div className="nav-icon logout">
                     <LogOut size={24} color='#ffffff'/>

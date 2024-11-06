@@ -40,7 +40,7 @@ function CadastrarCliente() {
             ...data,
             birthdate: formatDate,
         };
-        await setCustomer(payload);
+        return await setCustomer(payload);
     }
 
     const updateCliente = async (data: Customer) => {
@@ -59,8 +59,10 @@ function CadastrarCliente() {
             toast.success('Cliente atualizado com sucesso!');
             navigate('/clientes');
         } else {
-            await setCliente(data);
+            const response = await setCliente(data);
+            console.log(response)
             toast.success('Cliente cadastrado com sucesso!');
+            navigate('/clientes');
             reset();
         }
     }
