@@ -1,12 +1,12 @@
 import './produtos.scss';
 import { useEffect, useState } from "react";
-import Table, { Coluna } from "../../ui/components/table/table";
-import Header from "../../ui/components/header/header";
+import Table, { Coluna } from "../../components/table/table";
+import Header from "../../components/header/header";
 import { Box, Pagination } from "@mui/material";
-import SideNav from '../../ui/components/sidenav/sidenav';
-import Pesquisa from '../../ui/components/pesquisa/pesquisa';
+import SideNav from '../../components/sidenav/sidenav';
+import Pesquisa from '../../components/pesquisa/pesquisa';
 import { deleteProduct, getProduct } from '../../data/services/product.service';
-import Button from '../../ui/components/button/button';
+import Button from '../../components/button/button';
 import { useNavigate } from 'react-router-dom';
 import { Filters } from '../../interface/filters/product-filters.interface';
 

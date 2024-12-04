@@ -1,0 +1,46 @@
+.container-balance {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: #fff;
+    background-color: #FB3F6C;
+    border-radius: 8px;
+    padding: 16px;
+
+    p {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    span {
+        font-size: 16px;
+        font-weight: 400;
+        opacity: 0.8;
+    }
+
+    .icon-balance-contents {
+        img {
+            margin-bottom: 12px;
+            margin-left: 57px;
+        }
+
+        .wrapper-icon {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-balance {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            padding: 4px;
+            cursor: pointer;
+        }
+    }
+}

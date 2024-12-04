@@ -3,7 +3,7 @@ import { Product } from "../../interface/product.interface";
 import api from "./api";
 
 export async function getProduct(filters: Filters) {
-    const response = await api.get('product/all', {params: {...filters}});
+    const response = await api.get('product', {params: {...filters}});
     return response.data;
 }
 

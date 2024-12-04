@@ -1,16 +1,16 @@
 import './cadrastrar-cliente.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 import { getCustomerById, setCustomer, updateCustomer } from '../../data/services/customer.service';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '../../validators/customer-validator';
-import { Customer } from '../../interface/customer.interface';
+import { Customer } from '../../interface/customer.interface';  
 import { format } from 'date-fns';
 import { toast, ToastContainer } from 'react-toastify';
-import Button from "../../ui/components/button/button";
-import Cadastro from "../../ui/components/cadastro/cadastro";
-import Input from "../../ui/components/input/input";
-import SideNav from "../../ui/components/sidenav/sidenav";
+import Button from "../../components/button/button";
+import Cadastro from "../../components/cadastro/cadastro";
+import Input from "../../components/input/input";
+import SideNav from "../../components/sidenav/sidenav";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 

@@ -1,12 +1,12 @@
 import './clientes.scss';
 import { useEffect, useState } from "react";
-import Table, { Coluna } from "../../ui/components/table/table";
+import Table, { Coluna } from "../../components/table/table";
 import { deleteCustomer, getCustomer } from "../../data/services/customer.service";
-import Header from "../../ui/components/header/header";
+import Header from "../../components/header/header";
 import { Box, Pagination } from "@mui/material";
-import SideNav from '../../ui/components/sidenav/sidenav';
-import Pesquisa from '../../ui/components/pesquisa/pesquisa';
-import Button from '../../ui/components/button/button';
+import SideNav from '../../components/sidenav/sidenav';
+import Pesquisa from '../../components/pesquisa/pesquisa';
+import Button from '../../components/button/button';
 import { useNavigate } from 'react-router-dom';
 import { Filters } from '../../interface/filters/customer-filters.interface';
 

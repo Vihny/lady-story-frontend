@@ -1,10 +1,18 @@
-import SideNav from "../../ui/components/sidenav/sidenav";
+import './home.scss';
+import Chart from "../../components/chart/chart";
+import SideNav from "../../components/sidenav/sidenav";
+import { CarouselDemo } from '../../components/carousel/carousel';
 
 function Home() {
     return (
         <>
-          <SideNav />
-          <p style={{textAlign: "center"}}>home</p>
+          <div className="container-home">
+            <SideNav />
+            <div>
+              <Chart />
+              <CarouselDemo />
+            </div>
+          </div>
         </>
     )
 }

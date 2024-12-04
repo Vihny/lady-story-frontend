@@ -3,7 +3,7 @@ import { Filters } from "../../interface/filters/customer-filters.interface";
 import api from "./api";
 
 export async function getCustomer(filters: Filters) {
-    const response = await api.get('customer/all', {params: {...filters}});
+    const response = await api.get('customer', {params: {...filters}});
     return response.data;
 }
 
