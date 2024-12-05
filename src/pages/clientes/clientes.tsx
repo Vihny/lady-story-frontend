@@ -92,7 +92,7 @@ function Cliente() {
                     />
                     <Button className='botao-inputs' title='Novo cliente' icon='Plus' onPress={handleClick} />
                 </div>
-                    <div className="container-stepper">
+                <div className="container-stepper">
                     {tableLabels.map((label, index) => (
                         <button className="button-stepper"
                             key={label}
@@ -100,8 +100,8 @@ function Cliente() {
                             style={{color: selectedTable === index ? '#FF698D' : '#525256', }}>
                             {label}
                         </button>
-                ))}    
-                    </div>
+                    ))}    
+                </div>
                 <Box>
                     <Table titleModal='cliente' columns={colunas} data={filterFunctions[selectedTable]()} onDelete={deleteCliente} onEdit={handleEdit} />
                 </Box>

@@ -1,4 +1,9 @@
 .carousel-container {
+  background-color: #fff;
+  width: 320px;
+  height: 280px;
+  border-radius: 12px;
+
   .total-card {
     display: flex;
     align-items: center;
@@ -14,7 +19,7 @@
 
     span {
       color: #525256;
-      font-size: 18px;
+      font-size: 14px;
       font-size: 400;
     }
   }

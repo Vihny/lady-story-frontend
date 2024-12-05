@@ -1,0 +1,51 @@
+.container-transactions {
+    background-color: #fff;
+    border-radius: 8px;
+
+    .container-stepper {
+        display: flex;
+        padding: 20px;
+
+        .button-stepper {
+            position: relative;
+            font-size: 16px;
+            font-weight: 700;
+
+            &::before {
+                position: absolute;
+                content: '';
+                width: 65px;
+                height: 2px;
+                background-color: transparent;
+                top: 26px;
+            }
+
+            &.active::before {
+                background-color: #299D91;
+            }
+        } 
+    }
+
+    .contents-transactions {
+        border-bottom: 1px solid #F3F3F3;
+        padding: 24px;
+
+        .transactions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            p {
+                color: #191919;
+                font-weight: 600;
+                font-size: 18px;
+            }
+
+            span {
+                color: #9F9F9F;
+                font-size: 14px;
+                font-weight: 500;
+            }
+        }
+    }
+}

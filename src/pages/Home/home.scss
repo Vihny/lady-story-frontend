@@ -1,4 +1,10 @@
 .container-home {
     display: flex;
-    gap: 12px;
+    gap: 60px;
+
+    .contents-home {
+        display: grid;
+        grid-template-columns:  1fr 1fr;
+        margin: 24px;
+    }
 }
