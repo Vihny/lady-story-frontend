@@ -1,4 +1,21 @@
 .carousel-container {
-    background-color: #fff;
-    width: 600px;
+  .total-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-bottom: solid 1px #f3f3f3;
+    padding: 12px;
+
+    p {
+      color: #191919;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    span {
+      color: #525256;
+      font-size: 18px;
+      font-size: 400;
+    }
+  }
 }
