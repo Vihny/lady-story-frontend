@@ -4,7 +4,6 @@ import Table, { Coluna } from "../../components/table/table";
 import { deleteCustomer, getCustomer } from "../../data/services/customer.service";
 import Header from "../../components/header/header";
 import { Box, Pagination } from "@mui/material";
-import SideNav from '../../components/sidenav/sidenav';
 import Pesquisa from '../../components/pesquisa/pesquisa';
 import Button from '../../components/button/button';
 import { useNavigate } from 'react-router-dom';
@@ -76,51 +75,48 @@ function Cliente() {
        
     return (    
        <>
-        <div className='container-clientes'>
-            <SideNav />
-            <div>
-                <Header />
-                <div className='container-pesquisa-inputs'>
-                    <Pesquisa 
-                        title='Clientes' 
-                        placeholder='CPF' 
-                        value={filters.cpf}
-                        onChange={(e) => handleFilterChange('cpf', e.target.value)}
-                        searchPlaceholder='Pesquisar' 
-                        searchValue={filters.name}
-                        searchChange={(e) => handleFilterChange('name', e.target.value)}
-                    />
-                    <Button className='botao-inputs' title='Novo cliente' icon='Plus' onPress={handleClick} />
-                </div>
-                <div className="container-stepper">
-                    {tableLabels.map((label, index) => (
-                        <button className="button-stepper"
-                            key={label}
-                            onClick={() => setSelectedTable(index)}
-                            style={{color: selectedTable === index ? '#FF698D' : '#525256', }}>
-                            {label}
-                        </button>
-                    ))}    
-                </div>
-                <Box>
-                    <Table titleModal='cliente' columns={colunas} data={filterFunctions[selectedTable]()} onDelete={deleteCliente} onEdit={handleEdit} />
-                </Box>
-                <div className='container-paginator'>
-                    <Pagination 
-                        count={10} 
-                        color="secondary" 
-                        variant="outlined" 
-                        size='small' 
-                        shape="circular"
-                        sx={{
-                            '& .MuiPaginationItem-root': {
-                                borderRadius: '50%',
-                                width: '30px',
-                                height: '30px'
-                            }
-                        }} 
-                    />
-                </div>
+        <div className='container-cliente'>
+            <Header />
+            <div className='container-pesquisa-inputs'>
+                <Pesquisa 
+                    title='Clientes' 
+                    placeholder='CPF' 
+                    value={filters.cpf}
+                    onChange={(e) => handleFilterChange('cpf', e.target.value)}
+                    searchPlaceholder='Pesquisar' 
+                    searchValue={filters.name}
+                    searchChange={(e) => handleFilterChange('name', e.target.value)}
+                />
+                <Button className='botao-inputs' title='Novo cliente' icon='Plus' onPress={handleClick} />
+            </div>
+            <div className="container-stepper">
+                {tableLabels.map((label, index) => (
+                    <button className="button-stepper"
+                        key={label}
+                        onClick={() => setSelectedTable(index)}
+                        style={{color: selectedTable === index ? '#FF698D' : '#525256', }}>
+                        {label}
+                    </button>
+                ))}    
+            </div>
+            <Box>
+                <Table titleModal='cliente' columns={colunas} data={filterFunctions[selectedTable]()} onDelete={deleteCliente} onEdit={handleEdit} />
+            </Box>
+            <div className='container-paginator'>
+                <Pagination 
+                    count={10} 
+                    color="secondary" 
+                    variant="outlined" 
+                    size='small' 
+                    shape="circular"
+                    sx={{
+                        '& .MuiPaginationItem-root': {
+                            borderRadius: '50%',
+                            width: '30px',
+                            height: '30px'
+                        }
+                    }} 
+                />
             </div>
            </div>
        </>

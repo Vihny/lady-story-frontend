@@ -51,18 +51,18 @@ const Table = ({ columns, data, titleModal, onDelete, onEdit }: TableProps) => {
 
   return (
     <div className="container-table">
-      <table>
-        <thead>
-          <tr>
+      <table className='table-auto border-collapse border-gray-300 w-full text-sm text-gray-800'>
+        <thead className='text-gray-700'>
+          <tr className='text-left align-middle'>
             {columns.map((col) => (
               <th key={col.accessor}>{col.header}</th>
             ))}
             <th>Ações</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='divide-y divide-gray-200'>
           {data.map((row) => (
-            <tr key={row.id}>
+            <tr key={row.id} className='text-left align-middle'>
               {columns.map((col) => (
                 <td key={col.accessor}>{row[col.accessor]}</td>
               ))}
@@ -102,8 +102,8 @@ const Table = ({ columns, data, titleModal, onDelete, onEdit }: TableProps) => {
             </Button>
             </DialogActions>
         </Dialog>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default Table;

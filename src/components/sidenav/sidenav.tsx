@@ -1,43 +1,64 @@
-import { Outlet, Link } from "react-router-dom";
-import "./sidenav.scss"
-import { Grid } from 'react-feather';
-import { Briefcase } from 'react-feather';
-import { User } from 'react-feather';
-import { Settings } from 'react-feather';
-import { LogOut } from 'react-feather';
+import { Outlet, NavLink } from "react-router-dom";
+import { Grid, Briefcase, User, Settings, LogOut } from "react-feather";
+import "./sidenav.scss";
 
 function SideNav() {
-
     return (
-        <>
-          <div className="container-sidenav">
+        <div className="container-sidenav">
             <img src="src/assets/logo-ladystore.png" alt="Logo" />
             <div className="link-navs">
-                <div className="nav-icon">
-                    <Grid size={24} color='#ffffff'/>
-                    <Link to='/'>Dashboard</Link>
+                <div className={`nav-icon`}>
+                    <NavLink
+                        to="/"
+                        className={({ isActive }) =>
+                            isActive ? "nav-icon active" : "nav-icon"
+                        }
+                    >
+                        <Grid size={24} color="#ffffff" />
+                        Dashboard
+                    </NavLink>
                 </div>
-                <div className="nav-icon">
-                    <Briefcase size={24} color='#ffffff'/>
-                    <Link to='/produtos'>Produtos</Link>
+                <div className={`nav-icon`}>
+                    <NavLink
+                        to="/produtos"
+                        className={({ isActive }) =>
+                            isActive ? "nav-icon active" : "nav-icon"
+                        }
+                    >
+                        <Briefcase size={24} color="#ffffff" />
+                        Produtos
+                    </NavLink>
                 </div>
-                <div className="nav-icon">
-                    <User size={24} color='#ffffff'/>
-                    <Link to='/clientes'>Clientes</Link>
-                </div>  
-                <div className="nav-icon">
-                    <Settings size={24} color='#ffffff'/>
-                    <Link to='/'>Settings</Link>
-                </div> 
+                <div className={`nav-icon`}>
+                    <NavLink
+                        to="/clientes"
+                        className={({ isActive }) =>
+                            isActive ? "nav-icon active" : "nav-icon"
+                        }
+                    >
+                        <User size={24} color="#ffffff" />
+                        Clientes
+                    </NavLink>
+                </div>
+                <div className={`nav-icon`}>
+                    <NavLink
+                        to="/settings"
+                        className={({ isActive }) =>
+                            isActive ? "nav-icon active" : "nav-icon"
+                        }
+                    >
+                        <Settings size={24} color="#ffffff" />
+                        Settings
+                    </NavLink>
+                </div>
                 <div className="nav-icon logout">
-                    <LogOut size={24} color='#ffffff'/>
-                    <Link to='/logout'>Logout</Link>
-                </div>  
+                    <LogOut size={24} color="#ffffff" />
+                    <NavLink to="/logout">Logout</NavLink>
+                </div>
             </div>
-          </div>
-          <Outlet />
-        </>
-    )
+            <Outlet />
+        </div>
+    );
 }
 
 export default SideNav;

@@ -1,10 +1,5 @@
-.container-home {
-    display: flex;
-    gap: 60px;
-
-    .contents-home {
-        display: grid;
-        grid-template-columns:  1fr 1fr;
-        margin: 24px;
-    }
+.contents-home {
+    display: grid;
+    grid-template-columns:  1fr 1fr;
+    margin: 24px;
 }

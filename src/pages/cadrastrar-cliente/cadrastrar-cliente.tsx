@@ -10,7 +10,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import Button from "../../components/button/button";
 import Cadastro from "../../components/cadastro/cadastro";
 import Input from "../../components/input/input";
-import SideNav from "../../components/sidenav/sidenav";
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
@@ -71,7 +70,6 @@ function CadastrarCliente() {
         <>
         <form className="container-cliente">
             <ToastContainer />
-            <SideNav />
             <Cadastro text="Gerenciamento de Clientes" modulo="Cadastrar Cliente">
                 <Input label='Nome do Cliente' placeholder='Ex.: Maria Santos Silva' type='text' defaultValue={cliente?.name || ''} {...register('name')} error={errors.name?.message} />
                 <Input label='Data de Nascimento'  type='date' {...register('birthdate')} error={errors.birthdate?.message} />

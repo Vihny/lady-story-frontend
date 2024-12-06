@@ -4,7 +4,7 @@ import Rotas from './routes/router'
 function App() {
   return (
     <>
-      <Rotas/>
+    <Rotas/>
     </>
   )
 }

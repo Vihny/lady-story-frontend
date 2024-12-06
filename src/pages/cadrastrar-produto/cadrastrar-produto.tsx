@@ -8,7 +8,6 @@ import { Product } from "../../interface/product.interface";
 import Button from "../../components/button/button";
 import Cadastro from "../../components/cadastro/cadastro";
 import Input from "../../components/input/input";
-import SideNav from "../../components/sidenav/sidenav";
 import { getProductById, setProduct, updateProduct } from '../../data/services/product.service';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -60,7 +59,6 @@ function CadastrarProduto() {
         <>
         <div className="container-produtos">
             <ToastContainer />
-            <SideNav />
             <Cadastro text="Gerenciamento de Produtos" modulo="Cadastrar Produto">
                 <Input label='Nome do Produto' placeholder='Ex.: Camisa' type='text' defaultValue={produto?.name || ''} {...register('name')} error={errors.name?.message} />
                 <Input label='Tipo de Produto' placeholder='Ex.: Malha' type='text' defaultValue={produto?.type || ''} {...register('type')} error={errors.type?.message} />

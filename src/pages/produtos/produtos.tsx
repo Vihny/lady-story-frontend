@@ -2,8 +2,7 @@ import './produtos.scss';
 import { useEffect, useState } from "react";
 import Table, { Coluna } from "../../components/table/table";
 import Header from "../../components/header/header";
-import { Box, Pagination } from "@mui/material";
-import SideNav from '../../components/sidenav/sidenav';
+import { Pagination } from "@mui/material";
 import Pesquisa from '../../components/pesquisa/pesquisa';
 import { deleteProduct, getProduct } from '../../data/services/product.service';
 import Button from '../../components/button/button';
@@ -80,50 +79,45 @@ function Produto() {
     return (
        <>
         <div className='container-produtos'>
-            <SideNav />
-            <div>
-                <Header />
-                <div className='container-pesquisa-inputs'>
-                <Pesquisa 
-                        title='Produtos' 
-                        placeholder='Tamanho' 
-                        value={filters.size}
-                        onChange={(e) => handleFilterChange('size', e.target.value)}
-                        searchPlaceholder='Pesquisar' 
-                        searchValue={filters.name}
-                        searchChange={(e) => handleFilterChange('name', e.target.value)}
-                    />
-                    <Button className='botao-inputs' title='Novo produto' icon='Plus' onPress={handleClick} />
-                </div>
-                    <div className='container-stepper'>
-                    {tableLabels.map((label, index) => (
-                        <button className='button-stepper'
-                            key={label}
-                            onClick={() => setSelectedTable(index)}
-                            style={{color: selectedTable === index ? '#FF698D' : '#525256', }}>
-                            {label}
-                        </button>
+            <Header />
+            <div className='container-pesquisa-inputs'>
+            <Pesquisa 
+                    title='Produtos' 
+                    placeholder='Tamanho' 
+                    value={filters.size}
+                    onChange={(e) => handleFilterChange('size', e.target.value)}
+                    searchPlaceholder='Pesquisar' 
+                    searchValue={filters.name}
+                    searchChange={(e) => handleFilterChange('name', e.target.value)}
+                />
+                <Button className='botao-inputs' title='Novo produto' icon='Plus' onPress={handleClick} />
+            </div>
+            <div className='container-stepper'>
+                {tableLabels.map((label, index) => (
+                    <button className='button-stepper'
+                        key={label}
+                        onClick={() => setSelectedTable(index)}
+                        style={{color: selectedTable === index ? '#FF698D' : '#525256', }}>
+                        {label}
+                    </button>
                 ))}    
-                    </div>
-                <Box>
-                    <Table titleModal='produto' columns={colunas} data={filterFunctions[selectedTable]()} onDelete={deleteProduto} onEdit={handleEdit} />
-                </Box>
-                <div className='container-paginator'>
-                    <Pagination 
-                        count={10} 
-                        color='secondary'
-                        variant='outlined'
-                        size='small' 
-                        shape='circular'
-                        sx={{
-                            '& .MuiPaginationItem-root': {
-                                borderRadius: '50%',
-                                width: '30px',
-                                height: '30px'
-                            }
-                        }} 
-                    />
-                </div>
+            </div>
+            <Table titleModal='produto' columns={colunas} data={filterFunctions[selectedTable]()} onDelete={deleteProduto} onEdit={handleEdit} />
+            <div className='container-paginator'>
+                <Pagination 
+                    count={10} 
+                    color='secondary'
+                    variant='outlined'
+                    size='small' 
+                    shape='circular'
+                    sx={{
+                        '& .MuiPaginationItem-root': {
+                            borderRadius: '50%',
+                            width: '30px',
+                            height: '30px'
+                        }
+                    }} 
+                />
             </div>
            </div>
        </>

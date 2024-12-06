@@ -7,8 +7,8 @@ export async function getProduct(filters: Filters) {
     return response.data;
 }
 
-export async function getProductById(id: number | string) {
-    const response = await api.get(`product/one/${id}`);
+export async function getProductById(name: string) {
+    const response = await api.get(`product/search/${name}`);
     return response.data;
 }
 
