@@ -49,6 +49,13 @@ const Table = ({ columns, data, titleModal, onDelete, onEdit }: TableProps) => {
     }
   };
 
+  function formatPriceToBRL(price: number): string {
+    return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+    }).format(price);
+}
+
   return (
     <div className="container-table">
       <table className='table-auto border-collapse border-gray-300 w-full text-sm text-gray-800'>
@@ -61,10 +68,14 @@ const Table = ({ columns, data, titleModal, onDelete, onEdit }: TableProps) => {
           </tr>
         </thead>
         <tbody className='divide-y divide-gray-200'>
-          {data.map((row) => (
+          {data && data.map((row) => (
             <tr key={row.id} className='text-left align-middle'>
               {columns.map((col) => (
-                <td key={col.accessor}>{row[col.accessor]}</td>
+                <td key={col.accessor}>
+                  {col.accessor === 'price' && typeof row[col.accessor] === 'number'
+                          ? formatPriceToBRL(row[col.accessor] as number) 
+                          : row[col.accessor]}
+                </td>
               ))}
               <td className='icon'>
                 <IconButton onClick={(event) => handleMenuOpen(event, row.id)} sx={{width: 40}}>

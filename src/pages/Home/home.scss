@@ -1,5 +1,24 @@
-.contents-home {
-    display: grid;
-    grid-template-columns:  1fr 1fr;
-    margin: 24px;
+.home-page {
+    width: 100%;
+
+    .container-home {
+        display: grid;
+        grid-template-columns:  1fr 1fr;
+        gap: 24px;
+        margin: 0px 60px;
+    
+        .contents-home {
+            display: flex;
+            flex-direction: column;
+            margin-top: 18px;
+    
+            h3 {
+                font-size: 22px;
+                font-weight: 400;
+                color: #878787;
+                margin-bottom: 8px;
+            }
+        }
+    
+    }
 }

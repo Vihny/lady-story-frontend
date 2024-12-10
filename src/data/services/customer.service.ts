@@ -1,9 +1,11 @@
+import { QueryFunctionContext } from "@tanstack/react-query";
 import { Customer } from "../../interface/customer.interface";
-import { Filters } from "../../interface/filters/customer-filters.interface";
-import api from "./api";
+import api from "../api";
 
-export async function getCustomer(filters: Filters) {
-    const response = await api.get('customer', {params: {...filters}});
+export async function getCustomer({ queryKey }: QueryFunctionContext<string[]>) {
+    const filters = queryKey[1];
+    const parsedFilters = filters ? JSON.parse(filters) : {};
+    const response = await api.get('customer', { params: { ...parsedFilters } });
     return response.data;
 }
 

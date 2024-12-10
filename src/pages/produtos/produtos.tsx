@@ -1,5 +1,5 @@
 import './produtos.scss';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Table, { Coluna } from "../../components/table/table";
 import Header from "../../components/header/header";
 import { Pagination } from "@mui/material";
@@ -8,30 +8,18 @@ import { deleteProduct, getProduct } from '../../data/services/product.service';
 import Button from '../../components/button/button';
 import { useNavigate } from 'react-router-dom';
 import { Filters } from '../../interface/filters/product-filters.interface';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import Stepper from '../../components/stepper/stepper'; 
 
 function Produto() {
-    const [data, setData] = useState<Record<string, string | number>[]>([]);
+    const queryClient = useQueryClient();
     const [selectedTable, setSelectedTable] = useState(0);
     const [filters, setFilters] = useState<Filters>({ name: '', size: '' });
 
-    useEffect(() => {
-        const getProdutos = async () => {
-            try {
-                const searchFilters = {
-                    ...(filters.name ? { name: filters.name } : {}),
-                    ...(filters.size ? { size: filters.size } : {})
-                };
-
-                const result = await getProduct(searchFilters);
-                setData(result);
-            } catch (error) {
-                console.error('Erro ao buscar produtos: ', error);
-            }
-        };
-      
-        getProdutos();
-
-    }, [filters]);
+    const { data: products} = useQuery({
+        queryKey: ['products', JSON.stringify(filters)],
+        queryFn: getProduct,
+    })
 
     const colunas: Coluna[] = [
         { header: 'Nome do produto', accessor: 'name' },
@@ -43,13 +31,7 @@ function Produto() {
         { header: 'Preço', accessor: 'price' },
     ];
 
-    const tableLabels = ['Todos', 'Receitas', 'Despesas'];
-
-    const filterFunctions = [
-        () => data,
-        () => data.filter(item => item.pagamento === 'Receita'),
-        () => data.filter(item => item.pagamento === 'Despesa'),
-    ];
+    const labels = ['Todos', 'Receitas', 'Despesas'];
 
     const navigate = useNavigate();
 
@@ -61,27 +43,34 @@ function Produto() {
         navigate(`/cadastrar-produto/${id}`);
     };
 
-    const deleteProduto = async (id: number | string): Promise<void> => {
-        if (typeof id === 'number') {
-            try {
-                setData((prevData) => prevData.filter((item) => item.id !== id));
-                await deleteProduct(id);
-            } catch (error) {
-                console.error("Erro ao deletar produto:", error);
-            }
-        }
+    const deleteMutation = useMutation({
+        mutationFn: (id: number) => deleteProduct(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['products'], 
+            });
+        },
+        onError: (error) => {
+            console.error("Erro ao deletar produto:", error);
+            alert("Ocorreu um erro ao tentar deletar o produto.");
+        },
+    });
+
+    const handleDelete = (id: number | string) => {
+        const numericId = typeof id === 'string' ? parseInt(id, 10) : id;
+        deleteMutation.mutate(numericId);
     };
 
     const handleFilterChange = (field: keyof Filters, value: string) => {
         setFilters((prevFilters) => ({ ...prevFilters, [field]: value }));
     };
-       
+
     return (
        <>
         <div className='container-produtos'>
             <Header />
             <div className='container-pesquisa-inputs'>
-            <Pesquisa 
+            <Pesquisa  
                     title='Produtos' 
                     placeholder='Tamanho' 
                     value={filters.size}
@@ -92,17 +81,13 @@ function Produto() {
                 />
                 <Button className='botao-inputs' title='Novo produto' icon='Plus' onPress={handleClick} />
             </div>
-            <div className='container-stepper'>
-                {tableLabels.map((label, index) => (
-                    <button className='button-stepper'
-                        key={label}
-                        onClick={() => setSelectedTable(index)}
-                        style={{color: selectedTable === index ? '#FF698D' : '#525256', }}>
-                        {label}
-                    </button>
-                ))}    
+            <div>
+                <Stepper labels={labels} selectedIndex={selectedTable} onStepChange={setSelectedTable} beforeColor='#FF698D' activeColor='#FF698D' />
+
+                {selectedTable === 0 && (
+                    <Table titleModal='produto' columns={colunas}  data={products}  onDelete={handleDelete} onEdit={handleEdit} />
+                )}
             </div>
-            <Table titleModal='produto' columns={colunas} data={filterFunctions[selectedTable]()} onDelete={deleteProduto} onEdit={handleEdit} />
             <div className='container-paginator'>
                 <Pagination 
                     count={10} 

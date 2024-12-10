@@ -1,37 +1,25 @@
 import './clientes.scss';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Table, { Coluna } from "../../components/table/table";
 import { deleteCustomer, getCustomer } from "../../data/services/customer.service";
 import Header from "../../components/header/header";
-import { Box, Pagination } from "@mui/material";
+import { Pagination } from "@mui/material";
 import Pesquisa from '../../components/pesquisa/pesquisa';
 import Button from '../../components/button/button';
 import { useNavigate } from 'react-router-dom';
 import { Filters } from '../../interface/filters/customer-filters.interface';
+import { useQuery } from '@tanstack/react-query';
+import Stepper from '../../components/stepper/stepper';
 
 function Cliente() {
-    const [data, setData] = useState<Record<string, string | number>[]>([]);
     const [selectedTable, setSelectedTable] = useState(0);
     const [filters, setFilters] = useState<Filters>({ name: '', cpf: '' });
 
-    useEffect(() => {
-        const getClientes = async () => {
-            try {
-                const searchFilters = {
-                    ...(filters.name ? { name: filters.name } : {}),
-                    ...(filters.cpf ? { cpf: filters.cpf } : {})
-                };
+    const { data: customers} = useQuery({
+        queryKey: ['customers', JSON.stringify(filters)],
+        queryFn: getCustomer,
+    })
 
-                const result = await getCustomer(searchFilters);
-                setData(result);
-            } catch (error) {
-                console.error('Erro ao buscar clientes: ', error);
-            }
-        };
-      
-        getClientes();
-
-    }, [filters]);
 
     const colunas: Coluna[] = [
         { header: 'Nome', accessor: 'name' },
@@ -41,13 +29,7 @@ function Cliente() {
         { header: 'Cidade', accessor: 'city' },
     ];
 
-    const tableLabels = ['Todos', 'Receitas', 'Despesas'];
-
-    const filterFunctions = [
-        () => data,
-        () => data.filter(item => item.pagamento === 'Receita'),
-        () => data.filter(item => item.pagamento === 'Despesa'),
-    ];
+    const labels = ['Todos', 'Receitas', 'Despesas'];
 
     const navigate = useNavigate();
     const handleClick = () => {
@@ -59,14 +41,14 @@ function Cliente() {
     };
 
     const deleteCliente = async (id: number | string): Promise<void> => {
-        if (typeof id === 'number') {
-            try {
-                setData((prevData) => prevData.filter((item) => item.id !== id));
-                await deleteCustomer(id);
-            } catch (error) {
-                console.error("Erro ao deletar cliente:", error);
-            }
-        }
+        // if (typeof id === 'number') {
+        //     try {
+        //         setData((prevData) => prevData.filter((item) => item.id !== id));
+        //         await deleteCustomer(id);
+        //     } catch (error) {
+        //         console.error("Erro ao deletar cliente:", error);
+        //     }
+        // }
     };
 
     const handleFilterChange = (field: keyof Filters, value: string) => {
@@ -89,19 +71,13 @@ function Cliente() {
                 />
                 <Button className='botao-inputs' title='Novo cliente' icon='Plus' onPress={handleClick} />
             </div>
-            <div className="container-stepper">
-                {tableLabels.map((label, index) => (
-                    <button className="button-stepper"
-                        key={label}
-                        onClick={() => setSelectedTable(index)}
-                        style={{color: selectedTable === index ? '#FF698D' : '#525256', }}>
-                        {label}
-                    </button>
-                ))}    
+            <div>
+                <Stepper labels={labels} selectedIndex={selectedTable} onStepChange={setSelectedTable} beforeColor='#FF698D' activeColor='#FF698D' />
+
+                {selectedTable === 0 && (
+                    <Table titleModal='cliente' columns={colunas}  data={customers}  onDelete={deleteCliente} onEdit={handleEdit} />
+                )}
             </div>
-            <Box>
-                <Table titleModal='cliente' columns={colunas} data={filterFunctions[selectedTable]()} onDelete={deleteCliente} onEdit={handleEdit} />
-            </Box>
             <div className='container-paginator'>
                 <Pagination 
                     count={10} 

@@ -5,7 +5,7 @@ function TotalBalance() {
     return (
         <>
           <div className='container-balance md:w-[300px]'>
-            <div>
+            <div className='balance'>
                 <span>Tipo de conta</span>
                 <p>Cartão de débito</p>
                 <span>**** **** **** 2598</span>

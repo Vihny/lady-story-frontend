@@ -52,8 +52,10 @@ function SideNav() {
                     </NavLink>
                 </div>
                 <div className="nav-icon logout">
+                    <NavLink to="/logout">
                     <LogOut size={24} color="#ffffff" />
-                    <NavLink to="/logout">Logout</NavLink>
+                    Logout
+                    </NavLink>
                 </div>
             </div>
             <Outlet />

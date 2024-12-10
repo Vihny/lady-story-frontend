@@ -10,7 +10,6 @@ function Transactions() {
         <>
         <div className="container-transactions">
             <Stepper labels={labels} selectedIndex={selectedTable} onStepChange={setSelectedTable} activeColor='#299D91' />
-            
 
             <div className="contents-transactions-total">
                 {selectedTable === 0 && (

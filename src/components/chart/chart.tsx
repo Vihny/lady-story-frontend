@@ -13,6 +13,8 @@ export default function ChartOverview() {
     { month: "Maio", value: "1500", current: 1400, previous: 1600 },
     { month: "Junho", value: "1000", current: 2000, previous: 2500 },
     { month: "Julho", value: "1000", current: 2700, previous: 3000 },
+    { month: "Agosto", value: "1000", current: 2500, previous: 3000 },
+    { month: "Setembro", value: "1000", current: 2100, previous: 2900 },
   ]
 
   const chartConfig = {
@@ -42,7 +44,7 @@ export default function ChartOverview() {
           </div>
         </div>
       </div>
-      <div className='w-full md:w-[480px] md:max-w-[600px]'>
+      <div className='w-full md:w-[600px] md:max-w-[600px]'>
         <ChartContainer config={chartConfig} className='min-h-[200px] w-full'>
           <BarChart accessibilityLayer data={chartData}>
             <CartesianGrid vertical={false}/>

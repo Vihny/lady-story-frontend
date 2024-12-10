@@ -1,9 +1,11 @@
-import { Filters } from "../../interface/filters/product-filters.interface";
 import { Product } from "../../interface/product.interface";
-import api from "./api";
+import { QueryFunctionContext } from '@tanstack/react-query';
+import api from "../api";
 
-export async function getProduct(filters: Filters) {
-    const response = await api.get('product', {params: {...filters}});
+export async function getProduct({ queryKey }: QueryFunctionContext<string[]>) {
+    const filters = queryKey[1];
+    const parsedFilters = filters ? JSON.parse(filters) : {};
+    const response = await api.get('product', { params: { ...parsedFilters } });
     return response.data;
 }
 
@@ -22,7 +24,7 @@ export async function updateProduct(id: number | string, data: Product) {
     return response;
 }
 
-export async function deleteProduct(id: number) {
+export async function deleteProduct(id: number | string) {
     const response = await api.delete(`product/delete/${id}`);
     return response;
 }
