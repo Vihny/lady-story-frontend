@@ -11,7 +11,7 @@ function Home() {
             <Header />
             <div className='container-home'>
               <div className='contents-home'>
-                <h3>Estatisticas</h3>
+                <h3>Estatística</h3>
                 <Chart />
               </div>
               <div className='contents-home'>

@@ -1,5 +1,5 @@
 import { Outlet, NavLink } from "react-router-dom";
-import { Grid, Briefcase, User, Settings, LogOut } from "react-feather";
+import { Grid, Briefcase, User, LogOut, CreditCard, ShoppingBag, Archive } from "react-feather";
 import "./sidenav.scss";
 
 function SideNav() {
@@ -42,13 +42,35 @@ function SideNav() {
                 </div>
                 <div className={`nav-icon`}>
                     <NavLink
-                        to="/settings"
+                        to="/financeiro"
                         className={({ isActive }) =>
                             isActive ? "nav-icon active" : "nav-icon"
                         }
                     >
-                        <Settings size={24} color="#ffffff" />
-                        Settings
+                        <CreditCard size={24} color="#ffffff" />
+                        Financeiro
+                    </NavLink>
+                </div>
+                <div className={`nav-icon`}>
+                    <NavLink
+                        to="/estoque"
+                        className={({ isActive }) =>
+                            isActive ? "nav-icon active" : "nav-icon"
+                        }
+                    >
+                        <Archive size={24} color="#ffffff" />
+                        Estoque
+                    </NavLink>
+                </div>
+                <div className={`nav-icon`}>
+                    <NavLink
+                        to="/vendas"
+                        className={({ isActive }) =>
+                            isActive ? "nav-icon active" : "nav-icon"
+                        }
+                    >
+                        <ShoppingBag size={24} color="#ffffff" />
+                        Vendas
                     </NavLink>
                 </div>
                 <div className="nav-icon logout">

@@ -5,6 +5,9 @@ import Produto from "../pages/produtos/produtos";
 import Cliente from "../pages/clientes/clientes";
 import Home from "../pages/home/home";
 import SideNav from "../components/sidenav/sidenav";
+import Financeiro from "../pages/financeiro/financeiro";
+import Estoque from "../pages/estoque/estoque";
+import Vendas from "../pages/vendas/vendas";
 
 
 const Rotas = () => {
@@ -16,6 +19,9 @@ const Rotas = () => {
               <Route path="/" element={ <Home /> } />
               <Route path="/produtos" element={ <Produto /> } />
               <Route path="/clientes" element={ <Cliente /> } />
+              <Route path="/financeiro" element={ <Financeiro /> } />
+              <Route path="/estoque" element={ <Estoque /> } />
+              <Route path="/vendas" element={ <Vendas /> } />
               <Route path="/cadastrar-produto" element={ <CadastrarProduto /> } />
               <Route path="/cadastrar-produto/:id" element={ <CadastrarProduto /> } />
               <Route path="/cadastrar-cliente" element={ <CadastrarCliente /> } />
