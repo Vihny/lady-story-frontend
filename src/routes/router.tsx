@@ -8,6 +8,7 @@ import SideNav from "../components/sidenav/sidenav";
 import Financeiro from "../pages/financeiro/financeiro";
 import Estoque from "../pages/estoque/estoque";
 import Vendas from "../pages/vendas/vendas";
+import CadastrarVenda from "../pages/cadrastrar-venda/cadrastrar-venda";
 
 
 const Rotas = () => {
@@ -26,6 +27,7 @@ const Rotas = () => {
               <Route path="/cadastrar-produto/:id" element={ <CadastrarProduto /> } />
               <Route path="/cadastrar-cliente" element={ <CadastrarCliente /> } />
               <Route path="/cadastrar-cliente/:id" element={<CadastrarCliente />} />
+              <Route path="/cadastrar-venda" element={ <CadastrarVenda /> } />
           </Routes>
         </div>
       </BrowserRouter>

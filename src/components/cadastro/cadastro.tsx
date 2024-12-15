@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import "./cadastro.scss"
-import Header from "../header/header";
 
 interface CadastrarProdutoProps {
     children?: ReactNode,
@@ -15,15 +14,12 @@ function CadastrarProduto({
 }: CadastrarProdutoProps) {
     return (
         <>
-        <div>
-            <Header /> 
-            <div className="container-cadastro">
-                <h1>{text}</h1>
-                <div className="content">
-                    <h2>{modulo}</h2>
-                    <div className="content-input">
-                        {children}
-                    </div>
+        <div className="container-cadastro">
+            <h1>{text}</h1>
+            <div className="content">
+                <h2>{modulo}</h2>
+                <div className="content-input">
+                    {children}
                 </div>
             </div>
         </div>
