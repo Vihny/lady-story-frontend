@@ -7,21 +7,21 @@ export async function getSupplier() {
 }
 
 export async function getSupplierById(id: number | string) {
-    const response = await api.get(`supplier/one/${id}`);
+    const response = await api.get(`supplier/${id}`);
     return response.data;
 }
 
 export async function setSupplier(data: Supplier) {
-    const response = await api.post('supplier/create', data);
+    const response = await api.post('supplier/', data);
     return response;
 }
 
 export async function updateSupplier(id: number | string, data: Supplier) {
-    const response = await api.patch(`supplier/update/${id}`, data);
+    const response = await api.put(`supplier/${id}`, data);
     return response;
 }
 
-export async function deleteSupplier(id: number) {
-    const response = await api.delete(`supplier/delete/${id}`);
+export async function deleteSupplier(id: string | number) {
+    const response = await api.delete(`supplier/${id}`);
     return response;
 }

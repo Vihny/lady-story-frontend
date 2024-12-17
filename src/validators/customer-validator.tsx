@@ -14,16 +14,24 @@ export const schema = yup.object().shape({
 
     cpf: yup.string()
       .required('O CPF do cliente é obrigatório')
-      .max(11)
-      .min(11, 'O CPF do cliente deve conter 11 números'),
+      .max(14)
+      .min(14, 'O CPF do cliente deve conter 11 números'),
 
     phone: yup.string()
-      .required('O telefone do cliente é obrigatório')
-      .max(11, 'O telefone do cliente deve conter 9 digitos + o DD'),
+      .required('O telefone é obrigatório')
+      .matches(/^\(\d{2}\) \d{5}-\d{4}$/, 'O telefone deve estar no formato (XX) XXXXX-XXXX')
+      .test('has-valid-length', 'O telefone deve ter 11 números incluindo o DD', value => {
+        const numbersOnly = value.replace(/\D/g, '');
+        return numbersOnly.length === 11;
+      }),
 
     postal_code: yup.string()
-      .required('O CEP do cliente é obrigatório')
-      .max(8, 'O CEP do cliente deve conter 8 números'),
+      .required('O CEP é obrigatório')
+      .matches(/^\d{5}-\d{3}$/, 'O CEP deve estar no formato XXXXX-XXX')
+      .test('has-valid-length', 'O CEP deve ter 8 números', value => {
+        const numbersOnly = value.replace(/\D/g, '');
+        return numbersOnly.length === 8;
+      }),
 
     city: yup.string()
       .required('A cidade do cliente é obrigatório')

@@ -5,5 +5,5 @@ export interface Product {
     type?: string,
     size?: string,
     color?: string,
-    price?: number,
+    price?: number | string,
 }

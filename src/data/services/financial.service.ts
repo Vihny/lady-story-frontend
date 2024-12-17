@@ -8,21 +8,21 @@ export async function getFinancial() {
 }
 
 export async function getFinancialById(id: number | string) {
-    const response = await api.get(`financial/one/${id}`);
+    const response = await api.get(`financial/${id}`);
     return response.data;
 }
 
 export async function setFinancial(data: Financial) {
-    const response = await api.post('financial/create', data);
+    const response = await api.post('financial/', data);
     return response;
 }
 
 export async function updateFinancial(id: number | string, data: Financial) {
-    const response = await api.patch(`financial/update/${id}`, data);
+    const response = await api.patch(`financial/${id}`, data);
     return response;
 }
 
-export async function deleteFinancial(id: number) {
-    const response = await api.delete(`financial/delete/${id}`);
+export async function deleteFinancial(id: number | string) {
+    const response = await api.delete(`financial/${id}`);
     return response;
 }

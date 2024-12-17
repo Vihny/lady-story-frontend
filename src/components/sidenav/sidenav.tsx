@@ -1,8 +1,12 @@
 import { Outlet, NavLink } from "react-router-dom";
-import { Grid, Briefcase, User, LogOut, CreditCard, ShoppingBag, Archive } from "react-feather";
+import { Grid, Briefcase, User, Users, LogOut, CreditCard, ShoppingBag, Archive } from "react-feather";
 import "./sidenav.scss";
 
-function SideNav() {
+interface SideNavProps {
+    handleNavigation: (path: string) => void;
+}
+
+function SideNav({ handleNavigation }: SideNavProps) {
     return (
         <div className="container-sidenav">
             <img src="src/assets/logo-ladystore.png" alt="Logo" />
@@ -10,6 +14,7 @@ function SideNav() {
                 <div className={`nav-icon`}>
                     <NavLink
                         to="/"
+                        onClick={() => handleNavigation('/')}
                         className={({ isActive }) =>
                             isActive ? "nav-icon active" : "nav-icon"
                         }
@@ -21,6 +26,7 @@ function SideNav() {
                 <div className={`nav-icon`}>
                     <NavLink
                         to="/produtos"
+                        onClick={() => handleNavigation('/produtos')}
                         className={({ isActive }) =>
                             isActive ? "nav-icon active" : "nav-icon"
                         }
@@ -32,17 +38,19 @@ function SideNav() {
                 <div className={`nav-icon`}>
                     <NavLink
                         to="/clientes"
+                        onClick={() => handleNavigation('/clientes')}
                         className={({ isActive }) =>
                             isActive ? "nav-icon active" : "nav-icon"
                         }
                     >
-                        <User size={24} color="#ffffff" />
+                        <Users size={24} color="#ffffff" />
                         Clientes
                     </NavLink>
                 </div>
                 <div className={`nav-icon`}>
                     <NavLink
                         to="/financeiro"
+                        onClick={() => handleNavigation('/financeiro')}
                         className={({ isActive }) =>
                             isActive ? "nav-icon active" : "nav-icon"
                         }
@@ -54,6 +62,7 @@ function SideNav() {
                 <div className={`nav-icon`}>
                     <NavLink
                         to="/estoque"
+                        onClick={() => handleNavigation('/estoque')}
                         className={({ isActive }) =>
                             isActive ? "nav-icon active" : "nav-icon"
                         }
@@ -64,7 +73,20 @@ function SideNav() {
                 </div>
                 <div className={`nav-icon`}>
                     <NavLink
+                        to="/fornecedor"
+                        onClick={() => handleNavigation('/fornecedor')}
+                        className={({ isActive }) =>
+                            isActive ? "nav-icon active" : "nav-icon"
+                        }
+                    >
+                        <User size={24} color="#ffffff" />
+                        Fornecedor
+                    </NavLink>
+                </div>
+                <div className={`nav-icon`}>
+                    <NavLink
                         to="/vendas"
+                        onClick={() => handleNavigation('/vendas')}
                         className={({ isActive }) =>
                             isActive ? "nav-icon active" : "nav-icon"
                         }

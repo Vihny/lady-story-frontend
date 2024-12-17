@@ -6,18 +6,21 @@ import { Pagination } from "@mui/material";
 import Pesquisa from '../../components/pesquisa/pesquisa';
 import { deleteProduct, getProduct } from '../../data/services/product.service';
 import Button from '../../components/button/button';
-import { useNavigate } from 'react-router-dom';
 import { Filters } from '../../interface/filters/product-filters.interface';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Stepper from '../../components/stepper/stepper'; 
+import { toast } from 'react-toastify';
+import { queryClient } from '../../lib/react-query';
+import DialogComponent from '../../components/dialog/dialog';
+import CadastrarProduto from '../cadastrar-produto/cadastrar-produto';
 
 function Produto() {
-    const queryClient = useQueryClient();
     const [selectedTable, setSelectedTable] = useState(0);
     const [filters, setFilters] = useState<Filters>({ name: '', size: '' });
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedProductId, setSelectedProductId] = useState<string | number | null>(null);
     const { data: products} = useQuery({
-        queryKey: ['products', JSON.stringify(filters)],
+        queryKey: ['product'],
         queryFn: getProduct,
     })
 
@@ -31,34 +34,52 @@ function Produto() {
         { header: 'Preço', accessor: 'price' },
     ];
 
-    const labels = ['Todos', 'Receitas', 'Despesas'];
-
-    const navigate = useNavigate();
+    const labels = ['Todos'];
 
     const handleClick = () => {
-        navigate('/cadastrar-produto');
+        setIsModalOpen(true);
+    };
+    
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedProductId(null);
+        getProdutoMutation.mutate();
     };
 
-    const handleEdit = (id: number | string) => {
-        navigate(`/cadastrar-produto/${id}`);
+    const handleEdit = (id: string | number) => {
+        setSelectedProductId(id);
+        setIsModalOpen(true);
     };
 
-    const deleteMutation = useMutation({
-        mutationFn: (id: number) => deleteProduct(id),
+    const getProdutoMutation = useMutation({
+        mutationFn: getProduct,
         onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['products'], 
-            });
+            queryClient.invalidateQueries({ queryKey: ['product'] });
+
+            if (selectedProductId) {
+                toast.success('Produto atualizado com sucesso!');
+            } else {
+                toast.success('Produto cadastrado com sucesso!');
+            }
         },
-        onError: (error) => {
-            console.error("Erro ao deletar produto:", error);
-            alert("Ocorreu um erro ao tentar deletar o produto.");
+        onError: () => {
+            toast.error('Erro ao obter produto.');
         },
     });
 
-    const handleDelete = (id: number | string) => {
-        const numericId = typeof id === 'string' ? parseInt(id, 10) : id;
-        deleteMutation.mutate(numericId);
+    const deleteProdutoMutation = useMutation({
+        mutationFn: (id: number | string) => deleteProduct(id),
+        onSuccess: () => {
+            toast.error('Produto excluído com sucesso!');
+            queryClient.invalidateQueries({queryKey: ['product']});
+        },
+        onError: () => {
+            toast.error('Erro ao excluir o produto.');
+        },
+    });
+
+    const handleDelete = (id: string | number) => {
+        deleteProdutoMutation.mutate(id);
     };
 
     const handleFilterChange = (field: keyof Filters, value: string) => {
@@ -104,6 +125,15 @@ function Produto() {
                     }} 
                 />
             </div>
+
+                <DialogComponent
+                    closeButtonText="Cancelar"
+                    open={isModalOpen}
+                    onClose={() => handleCloseModal()}
+                    
+                >
+                    {isModalOpen && <CadastrarProduto onCloseModal={handleCloseModal} productId={selectedProductId}/>}
+                </DialogComponent>
            </div>
        </>
     )

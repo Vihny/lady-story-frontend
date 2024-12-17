@@ -6,20 +6,23 @@ import Header from "../../components/header/header";
 import { Pagination } from "@mui/material";
 import Pesquisa from '../../components/pesquisa/pesquisa';
 import Button from '../../components/button/button';
-import { useNavigate } from 'react-router-dom';
 import { Filters } from '../../interface/filters/customer-filters.interface';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Stepper from '../../components/stepper/stepper';
+import { toast } from 'react-toastify';
+import { queryClient } from '../../lib/react-query';
+import DialogComponent from '../../components/dialog/dialog';
+import CadastrarCliente from '../cadastrar-cliente/cadastrar-cliente';
 
 function Cliente() {
     const [selectedTable, setSelectedTable] = useState(0);
     const [filters, setFilters] = useState<Filters>({ name: '', cpf: '' });
-
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedCustomerId, setSelectedCustomerId] = useState<string | number | null>(null);
     const { data: customers} = useQuery({
-        queryKey: ['customers', JSON.stringify(filters)],
+        queryKey: ['customer'],
         queryFn: getCustomer,
     })
-
 
     const colunas: Coluna[] = [
         { header: 'Nome', accessor: 'name' },
@@ -29,26 +32,52 @@ function Cliente() {
         { header: 'Cidade', accessor: 'city' },
     ];
 
-    const labels = ['Todos', 'Receitas', 'Despesas'];
+    const labels = ['Todos'];
 
-    const navigate = useNavigate();
     const handleClick = () => {
-        navigate('/cadastrar-cliente');
+        setIsModalOpen(true);
+    };
+    
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedCustomerId(null);
+        getClienteMutation.mutate();
     };
 
-    const handleEdit = (id: number | string) => {
-        navigate(`/cadastrar-cliente/${id}`);
+    const handleEdit = (id: string | number) => {
+        setSelectedCustomerId(id);
+        setIsModalOpen(true);
     };
 
-    const deleteCliente = async (id: number | string): Promise<void> => {
-        // if (typeof id === 'number') {
-        //     try {
-        //         setData((prevData) => prevData.filter((item) => item.id !== id));
-        //         await deleteCustomer(id);
-        //     } catch (error) {
-        //         console.error("Erro ao deletar cliente:", error);
-        //     }
-        // }
+    const getClienteMutation = useMutation({
+        mutationFn: getCustomer,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['customer'] });
+
+            if (selectedCustomerId) {
+                toast.success('Cliente atualizado com sucesso!');
+            } else {
+                toast.success('Cliente cadastrado com sucesso!');
+            }
+        },
+        onError: () => {
+            toast.error('Erro ao obter clientes.');
+        },
+    });
+
+    const deleteClienteMutation = useMutation({
+        mutationFn: (id: string | number) => deleteCustomer(id),
+        onSuccess: () => {
+            toast.success('Cliente excluído com sucesso!');
+            queryClient.invalidateQueries({ queryKey: ['customer'] });
+        },
+        onError: () => {
+            toast.error('Erro ao excluir o cliente.');
+        },
+    });
+
+    const handleDelete = (id: string | number) => {
+        deleteClienteMutation.mutate(id);
     };
 
     const handleFilterChange = (field: keyof Filters, value: string) => {
@@ -75,7 +104,7 @@ function Cliente() {
                 <Stepper labels={labels} selectedIndex={selectedTable} onStepChange={setSelectedTable} beforeColor='#FF698D' activeColor='#FF698D' />
 
                 {selectedTable === 0 && (
-                    <Table titleModal='cliente' columns={colunas}  data={customers}  onDelete={deleteCliente} onEdit={handleEdit} />
+                    <Table titleModal='cliente' columns={colunas}  data={customers}  onDelete={handleDelete} onEdit={handleEdit} />
                 )}
             </div>
             <div className='container-paginator'>
@@ -94,7 +123,16 @@ function Cliente() {
                     }} 
                 />
             </div>
-           </div>
+
+            <DialogComponent
+                closeButtonText="Cancelar"
+                open={isModalOpen}
+                onClose={() => handleCloseModal()}
+                
+            >
+                {isModalOpen && <CadastrarCliente onCloseModal={handleCloseModal} customerId={selectedCustomerId}/>}
+            </DialogComponent>
+        </div>
        </>
     )
 }

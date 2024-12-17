@@ -1,6 +1,6 @@
 export interface Financial {
     operation_date?: Date,
     operation_type?: string,
-    value?: number,
+    value?: string | number,
     description?: string,
 }

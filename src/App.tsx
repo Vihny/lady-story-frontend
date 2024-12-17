@@ -1,10 +1,13 @@
+import { BrowserRouter } from 'react-router-dom'
 import './App.css'
 import Rotas from './routes/router'
 
 function App() {
   return (
     <>
-    <Rotas/>
+    <BrowserRouter>
+      <Rotas />
+    </BrowserRouter>
     </>
   )
 }

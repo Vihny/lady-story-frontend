@@ -1,30 +1,27 @@
 import { Product } from "../../interface/product.interface";
-import { QueryFunctionContext } from '@tanstack/react-query';
 import api from "../api";
 
-export async function getProduct({ queryKey }: QueryFunctionContext<string[]>) {
-    const filters = queryKey[1];
-    const parsedFilters = filters ? JSON.parse(filters) : {};
-    const response = await api.get('product', { params: { ...parsedFilters } });
+export async function getProduct() {
+    const response = await api.get('product');
     return response.data;
 }
 
-export async function getProductById(name: string) {
-    const response = await api.get(`product/search/${name}`);
+export async function getProductById(id: number | string) {
+    const response = await api.get(`product/${id}`);
     return response.data;
 }
 
 export async function setProduct(data: Product) {
-    const response = await api.post('product/create', data);
+    const response = await api.post('product/', data);
     return response;
 }
 
 export async function updateProduct(id: number | string, data: Product) {
-    const response = await api.patch(`product/update/${id}`, data);
+    const response = await api.put(`product/${id}`, data);
     return response;
 }
 
 export async function deleteProduct(id: number | string) {
-    const response = await api.delete(`product/delete/${id}`);
+    const response = await api.delete(`product/${id}`);
     return response;
 }

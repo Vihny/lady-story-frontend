@@ -5,18 +5,22 @@ import Header from "../../components/header/header";
 import { Pagination } from "@mui/material";
 import Pesquisa from '../../components/pesquisa/pesquisa';
 import Button from '../../components/button/button';
-import { useNavigate } from 'react-router-dom';
 import { Filters } from '../../interface/filters/product-filters.interface';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import Stepper from '../../components/stepper/stepper'; 
-import { getFinancial } from '../../data/services/financial.service';
+import { deleteFinancial, getFinancial } from '../../data/services/financial.service';
+import { queryClient } from '../../lib/react-query';
+import { toast } from 'react-toastify';
+import CadastrarFinanceiro from '../cadastrar-financeiro/cadastrar-financeiro';
+import DialogComponent from '../../components/dialog/dialog';
 
 function Financeiro() {
     const [selectedTable, setSelectedTable] = useState(0);
     const [filters, setFilters] = useState<Filters>({ name: '', size: '' });
-
-    const { data: products} = useQuery({
-        queryKey: ['finacials'],
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedSupplierId, setSelectedSupplierId] = useState<string | number | null>(null);
+    const { data: financials} = useQuery({
+        queryKey: ['finacial'],
         queryFn: getFinancial,
     })
 
@@ -27,20 +31,52 @@ function Financeiro() {
         { header: 'Descrição', accessor: 'description'},
     ];
 
-    const labels = ['Todos', 'Receitas', 'Despesas'];
-
-    const navigate = useNavigate();
+    const labels = ['Todos'];
 
     const handleClick = () => {
-        navigate('/cadastrar-financeiro');
+        setIsModalOpen(true);
+    };
+    
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedSupplierId(null);
+        getFinanceiroMutation.mutate();
     };
 
-    const handleEdit = (id: number | string) => {
-        navigate(`/cadastrar-financeiro/${id}`);
+    const handleEdit = (id: string | number) => {
+        setSelectedSupplierId(id);
+        setIsModalOpen(true);
     };
 
-    const handleDelete = (id: number | string) => {
-        
+    const getFinanceiroMutation = useMutation({
+        mutationFn: getFinancial,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['finacial'] });
+
+            if (selectedSupplierId) {
+                toast.success('Receita atualizado com sucesso!');
+            } else {
+                toast.success('Receita cadastrado com sucesso!');
+            }
+        },
+        onError: () => {
+            toast.error('Erro ao obter receita.');
+        },
+    });
+
+    const deleteFinanceiroMutation = useMutation({
+        mutationFn: (id: string | number) => deleteFinancial(id),
+        onSuccess: () => {
+            toast.success('Receita excluída com sucesso!');
+            queryClient.invalidateQueries({ queryKey: ['finacial'] });
+        },
+        onError: () => {
+            toast.error('Erro ao excluir receita.');
+        },
+    });
+
+    const handleDelete = (id: string | number) => {
+        deleteFinanceiroMutation.mutate(id);
     };
 
     const handleFilterChange = (field: keyof Filters, value: string) => {
@@ -58,13 +94,13 @@ function Financeiro() {
                     searchValue={filters.name}
                     searchChange={(e) => handleFilterChange('name', e.target.value)}
                 />
-                <Button className='botao-inputs' title='Cadastrar nova receita' icon='Plus' onPress={handleClick} />
+                <Button className='botao-inputs' title='Nova receita' icon='Plus' onPress={handleClick} />
             </div>
             <div>
                 <Stepper labels={labels} selectedIndex={selectedTable} onStepChange={setSelectedTable} beforeColor='#FF698D' activeColor='#FF698D' />
 
                 {selectedTable === 0 && (
-                    <Table titleModal='produto' columns={colunas}  data={products}  onDelete={handleDelete} onEdit={handleEdit} />
+                    <Table titleModal='produto' columns={colunas}  data={financials}  onDelete={handleDelete} onEdit={handleEdit} />
                 )}
             </div>
             <div className='container-paginator'>
@@ -83,9 +119,18 @@ function Financeiro() {
                     }} 
                 />
             </div>
+
+            <DialogComponent
+                    closeButtonText="Cancelar"
+                    open={isModalOpen}
+                    onClose={() => handleCloseModal()}
+                    
+                >
+                    {isModalOpen && <CadastrarFinanceiro onCloseModal={handleCloseModal} financialId={selectedSupplierId}/>}
+            </DialogComponent>
            </div>
        </>
     )
 }
- 
+
 export default Financeiro;

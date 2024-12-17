@@ -19,13 +19,13 @@ export const schema = yup.object().shape({
 
     size: yup.string()
       .required('O tamanho do produto é obrigatório')
-      .min(3, 'O tamanho do produto deve ter pelo menos 3 caracteres'),
+      .min(1, 'O tamanho do produto deve ter pelo menos 1 caracteres'),
 
     color: yup.string()
       .required('A cor do produto é obrigatório')
       .max(8, 'A cor do produto deve ter pelo menos 3 caracteres'),
 
-    price: yup.number()
+    price: yup.string()
       .required('O preço do produto é obrigatório')
       .min(3, 'O preço do produto deve ter pelo menos 3 caracteres'),
 });
