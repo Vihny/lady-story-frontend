@@ -13,12 +13,12 @@ export async function getFinancialById(id: number | string) {
 }
 
 export async function setFinancial(data: Financial) {
-    const response = await api.post('financial/', data);
+    const response = await api.post('financial', data);
     return response;
 }
 
 export async function updateFinancial(id: number | string, data: Financial) {
-    const response = await api.patch(`financial/${id}`, data);
+    const response = await api.put(`financial/${id}`, data);
     return response;
 }
 

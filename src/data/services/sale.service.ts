@@ -8,21 +8,21 @@ export async function getSale() {
 }
 
 export async function getSaleById(id: number | string) {
-    const response = await api.get(`sale/one/${id}`);
+    const response = await api.get(`sale/${id}`);
     return response.data;
 }
 
 export async function setSale(data: Sale) {
-    const response = await api.post('sale/create', data);
+    const response = await api.post('sale', data);
     return response;
 }
 
 export async function updateSale(id: number | string, data: Sale) {
-    const response = await api.patch(`sale/update/${id}`, data);
+    const response = await api.put(`sale/${id}`, data);
     return response;
 }
 
-export async function deleteSale(id: number) {
-    const response = await api.delete(`sale/delete/${id}`);
+export async function deleteSale(id: number | string) {
+    const response = await api.delete(`sale/${id}`);
     return response;
 }

@@ -13,10 +13,13 @@ import { toast } from 'react-toastify';
 import { queryClient } from '../../lib/react-query';
 import DialogComponent from '../../components/dialog/dialog';
 import CadastrarProduto from '../cadastrar-produto/cadastrar-produto';
+import { Product } from '../../interface/product.interface';
+import { Supplier } from '../../interface/supplier.interface';
+import { getSupplier } from '../../data/services/supplier.service';
 
 function Produto() {
     const [selectedTable, setSelectedTable] = useState(0);
-    const [filters, setFilters] = useState<Filters>({ name: '', size: '' });
+    const [filters, setFilters] = useState<Filters>({ name: '', type: '' });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState<string | number | null>(null);
     const { data: products} = useQuery({
@@ -24,8 +27,22 @@ function Produto() {
         queryFn: getProduct,
     })
 
+    const { data: suppliers } = useQuery({
+        queryKey: ['supplier '],
+        queryFn: getSupplier,
+    });
+
+    const productWithSupplierNames = products?.map((product: Product )=> {
+        const supplier = suppliers?.find((fornecedor: Supplier) => fornecedor.id === product.supplier_id);
+        return { 
+            ...product, 
+            supplier_id: supplier?.company_name || 'Fornecedor não encontrado',
+        };
+    });
+
     const colunas: Coluna[] = [
         { header: 'Nome do produto', accessor: 'name' },
+        { header: 'Fornecedor', accessor: 'supplier_id' },
         { header: 'Tamanho', accessor: 'size' },
         { header: 'Tipo', accessor: 'type' },
         { header: 'Cor', accessor: 'color' },
@@ -40,13 +57,13 @@ function Produto() {
         setIsModalOpen(true);
     };
     
-    const handleCloseModal = () => {
+    const handleCloseModal = () => { 
         setIsModalOpen(false);
         setSelectedProductId(null);
         getProdutoMutation.mutate();
     };
 
-    const handleEdit = (id: string | number) => {
+    const handleEdit = (id: string | number) => { 
         setSelectedProductId(id);
         setIsModalOpen(true);
     };
@@ -70,8 +87,8 @@ function Produto() {
     const deleteProdutoMutation = useMutation({
         mutationFn: (id: number | string) => deleteProduct(id),
         onSuccess: () => {
-            toast.error('Produto excluído com sucesso!');
             queryClient.invalidateQueries({queryKey: ['product']});
+            toast.success('Produto excluído com sucesso!');
         },
         onError: () => {
             toast.error('Erro ao excluir o produto.');
@@ -81,6 +98,12 @@ function Produto() {
     const handleDelete = (id: string | number) => {
         deleteProdutoMutation.mutate(id);
     };
+
+    const filteredProduct = productWithSupplierNames?.filter((product: Filters) => {
+        const matchesName = product.name?.toLowerCase().includes(filters.name.toLowerCase());
+        const matchesType = product.type?.toLowerCase().includes(filters.type.toLowerCase());
+        return matchesName && matchesType;
+    });
 
     const handleFilterChange = (field: keyof Filters, value: string) => {
         setFilters((prevFilters) => ({ ...prevFilters, [field]: value }));
@@ -93,12 +116,12 @@ function Produto() {
             <div className='container-pesquisa-inputs'>
             <Pesquisa  
                     title='Produtos' 
-                    placeholder='Tamanho' 
-                    value={filters.size}
-                    onChange={(e) => handleFilterChange('size', e.target.value)}
                     searchPlaceholder='Pesquisar' 
                     searchValue={filters.name}
                     searchChange={(e) => handleFilterChange('name', e.target.value)}
+                    placeholder='Tipo' 
+                    value={filters.type}
+                    onChange={(e) => handleFilterChange('type', e.target.value)}
                 />
                 <Button className='botao-inputs' title='Novo produto' icon='Plus' onPress={handleClick} />
             </div>
@@ -106,7 +129,7 @@ function Produto() {
                 <Stepper labels={labels} selectedIndex={selectedTable} onStepChange={setSelectedTable} beforeColor='#FF698D' activeColor='#FF698D' />
 
                 {selectedTable === 0 && (
-                    <Table titleModal='produto' columns={colunas}  data={products}  onDelete={handleDelete} onEdit={handleEdit} />
+                    <Table titleModal='produto' columns={colunas}  data={filteredProduct}  onDelete={handleDelete} onEdit={handleEdit} />
                 )}
             </div>
             <div className='container-paginator'>

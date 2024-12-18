@@ -12,6 +12,9 @@ import Input from "../../components/input/input";
 import { getProductById, setProduct, updateProduct } from '../../data/services/product.service';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { queryClient } from '../../lib/react-query';
+import Select from '../../components/select/select';
+import { getSupplier } from '../../data/services/supplier.service';
+import { Supplier } from '../../interface/supplier.interface';
 
 interface CadastrarPordutoProps {
     productId: string | number | null;
@@ -36,11 +39,24 @@ function CadastrarProduto({ productId, onCloseModal }: CadastrarPordutoProps) {
         retryOnMount: true,
     });
 
+    const { data: suppliers } = useQuery<Supplier[]>({
+        queryKey: ['supplier'],
+        queryFn: getSupplier,
+    });
+
     React.useEffect(() => {
         if (productId && !isFetching && isSuccess) {
-            reset(products);
+            const selectedSupplier = suppliers?.find((supplier: Supplier) => supplier.id === products.supplier_id);
+
+            const selectedProduct = {
+                ...products,
+                supplier_id: products?.supplier_id,
+                company_name: selectedSupplier?.company_name,
+            };
+
+            reset(selectedProduct);
         }
-    }, [productId, products, isFetching, isSuccess, reset]);
+    }, [productId, products, suppliers, isFetching, isSuccess, reset]);
     
     const createProdutoMutation = useMutation({
         mutationFn: setProduct,
@@ -66,6 +82,11 @@ function CadastrarProduto({ productId, onCloseModal }: CadastrarPordutoProps) {
         },
     });
 
+    const supplierOptions = suppliers?.map((supplier) => ({
+        value: supplier.id ? Number(supplier.id) : 0,
+        title: supplier.company_name ? String(supplier.company_name) : "",
+    })) || [];
+
     const onSubmit = async (data: Product) => {
         const cleanedPrice = Number(price.replace(/[^\d]/g, '').replace(/(\d{2})$/, ''));
         const formattedData = { ...data, price: cleanedPrice };
@@ -85,10 +106,10 @@ function CadastrarProduto({ productId, onCloseModal }: CadastrarPordutoProps) {
                 <Input label='Nome do Produto' placeholder='Ex.: Camisa' type='text' {...register('name')} error={errors.name?.message} />
                 <Input label='Tipo de Produto' placeholder='Ex.: Malha' type='text' {...register('type')} error={errors.type?.message} />
                 <Input label='Modelo do Produto' placeholder='Ex.: Gola Polo' type='text' {...register('model')} error={errors.model?.message} />
-                <Input label='Fornecedor' placeholder='Ex.: Adidas' type='text' {...register('brand')} error={errors.brand?.message} />
                 <Input label='Cor do Produto' placeholder='Ex.: Verde' type='text' {...register('color')} error={errors.color?.message} />
                 <Input label='Tamanho do Produto' placeholder='Ex.: P' type='text' {...register('size')} error={errors.size?.message} />
                 <Input label='Preço do Produto' placeholder='Ex.: $80,00' type='price' {...register('price')} error={errors.price?.message} onChange={handlePriceChange} value={price} />
+                <Select label='Fornecedor' placeholder='Selecione um fornecedor' maps={supplierOptions} {...register('supplier_id')} error={errors.supplier_id?.message} />
 
                 <Button icon={productId ? "Activity" : "PlusCircle"} title={productId ? "Atualizar" : "Cadastrar"} className="btn-produto" onPress={handleSubmit(onSubmit)} />
             </Cadastro>

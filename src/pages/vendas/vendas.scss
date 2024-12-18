@@ -1,0 +1,44 @@
+.container-fornecedor {
+    width: 100%;
+
+    .container-paginator {
+        display: flex;
+        justify-content: center;
+        margin-top: 22px;
+    }
+
+    .container-pesquisa-inputs {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .botao-inputs {
+            margin-top: 40px;
+            margin-right: 20px;
+            background-color: #FF698D;
+            height: 38px;
+        }
+    }  
+
+    .container-stepper {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        margin-left: 28px;
+
+        .button-stepper {
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: none;
+            background-color: transparent;
+            border: none;
+            width: 80px;
+        
+            &:hover {
+                background-color: 'transparent';
+                box-shadow: none;
+            }
+        }
+    }
+}
+  

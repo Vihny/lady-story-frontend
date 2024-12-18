@@ -12,6 +12,9 @@ import { queryClient } from '../../lib/react-query';
 import { Financial } from '../../interface/financial.interface';
 import { getFinancialById, setFinancial, updateFinancial } from '../../data/services/financial.service';
 import { schema } from '../../validators/financial-validator';
+import Select from '../../components/select/select';
+import { getSale } from '../../data/services/sale.service';
+import { Sale } from '../../interface/sale.interface.';
 
 interface CadastrarFinanceiroProps {
     financialId: string | number | null;
@@ -33,11 +36,23 @@ function CadastrarFinanceiro({ financialId, onCloseModal }: CadastrarFinanceiroP
         retryOnMount: true,
     });
 
+    const { data: sales } = useQuery<Sale[]>({
+        queryKey: ['sale'],
+        queryFn: getSale
+    });
+
     React.useEffect(() => {
         if (financialId && !isFetching && isSuccess) {
-            reset(financials);
+            const selectedSale = sales?.find((sale) => sale.id === financials?.sale_id);
+
+            const financialData = {
+                ...financials,
+                operation_type: String(financials.operation_type) || '',
+                sale_id: selectedSale?.id ? Number(selectedSale?.id) : 0,
+            };
+            reset(financialData)
         }
-    }, [financialId, financials, isFetching, isSuccess, reset]);
+    }, [financialId, financials, sales, isFetching, isSuccess, reset]);
     
     const createFinanceiroMutation = useMutation({
         mutationFn: setFinancial,
@@ -63,6 +78,16 @@ function CadastrarFinanceiro({ financialId, onCloseModal }: CadastrarFinanceiroP
         },
     });
 
+    const saleOptions = sales?.map(sale => ({
+        value: sale.id || 0,
+        title: sale.observation ? String(sale.observation) : "",
+    })) || [];
+    
+    const operationOptions = [
+        {value: 1, title: 'Despesa'},
+        {value: 2, title: 'Receita'},
+    ]
+    
     const onSubmit = async (data: Financial) => {
         if (financialId) {
             createFinanceiroMutation.mutate(data);
@@ -76,10 +101,11 @@ function CadastrarFinanceiro({ financialId, onCloseModal }: CadastrarFinanceiroP
         <div className="container-financeiro">
             <ToastContainer />
             <Cadastro text="Gerenciamento de Receitas" modulo="Cadastrar Receita">
-                <Input label='Data da operação' placeholder='Ex.: Camisa' type='text' {...register('operation_date')} error={errors.operation_date?.message} />
-                <Input label='Tipo de operação' placeholder='Ex.: Malha' type='text' {...register('operation_type')} error={errors.operation_type?.message} />
+                <Input label='Data da operação' placeholder='Ex.: Camisa' type='date' {...register('operation_date')} error={errors.operation_date?.message} />
+                <Select label='Tipo de operação' placeholder='Selecione uma tipo' maps={operationOptions} {...register('operation_type')} error={errors.operation_type?.message} />
                 <Input label='Valor' placeholder='Ex.: Gola Polo' type='text' {...register('value')} error={errors.value?.message} />
                 <Input label='Descrição' placeholder='Ex.: Adidas' type='text' {...register('description')} error={errors.description?.message} />
+                <Select label='Observação do produto' placeholder='Selecione um' maps={saleOptions} {...register('sale_id')} error={errors.sale_id?.message} />
 
                 <Button icon={financialId ? "Activity" : "PlusCircle"} title={financialId ? "Atualizar" : "Cadastrar"} className="btn-financeiro" onPress={handleSubmit(onSubmit)} />
             </Cadastro>

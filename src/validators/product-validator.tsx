@@ -28,4 +28,7 @@ export const schema = yup.object().shape({
     price: yup.string()
       .required('O preço do produto é obrigatório')
       .min(3, 'O preço do produto deve ter pelo menos 3 caracteres'),
+
+    supplier_id: yup.number()
+      .required('O fornecedor do produto é obrigatório')
 });

@@ -1,4 +1,4 @@
-import './fornecedor.scss';
+import './vendas.scss';
 import { useState } from "react";
 import Table, { Coluna } from "../../components/table/table";
 import Header from "../../components/header/header";
@@ -7,35 +7,29 @@ import Pesquisa from '../../components/pesquisa/pesquisa';
 import Button from '../../components/button/button';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Stepper from '../../components/stepper/stepper'; 
-import { deleteSupplier, getSupplier } from '../../data/services/supplier.service';
 import DialogComponent from '../../components/dialog/dialog';
-import CadastrarFornecedor from '../cadastrar-fornecedor/cadastrar-fornecedor';
 import { queryClient } from '../../lib/react-query';
 import { toast } from 'react-toastify';
-import { Filters } from '../../interface/filters/supplier-filters.interface';
+import { deleteSale, getSale } from '../../data/services/sale.service';
+import CadastrarVenda from '../cadastrar-venda/cadastrar-venda';
+import { Filters } from '../../interface/filters/sale-filters.interface';
 
-function Fornecedor() {
+function Vendas() {
     const [selectedTable, setSelectedTable] = useState(0);
-    const [filters, setFilters] = useState<Filters>({ company_name: '', cnpj: '' });
+    const [filters, setFilters] = useState({ sale_date: '', sale_state: '' });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedSupplierId, setSelectedSupplierId] = useState<string | number | null>(null);
     const { data: suppliers } = useQuery({
         queryKey: ['supplier'],
-        queryFn: getSupplier,
+        queryFn: getSale,
     });
 
     const colunas: Coluna[] = [
-        { header: 'Nome da empresa', accessor: 'company_name' },
-        { header: 'Nome da negociação', accessor: 'trading_name' },
-        { header: 'CNPJ', accessor: 'cnpj' },
-        { header: 'Telefone', accessor: 'phone' },
-        { header: 'CEP', accessor: 'postal_code' },
-        { header: 'Estado', accessor: 'state' },
-        { header: 'Cidade', accessor: 'city' },
-        { header: 'Bairro', accessor: 'neighborhood' },
-        { header: 'Rua', accessor: 'street' },
-        { header: 'Número', accessor: 'number' },
-        { header: 'Complemento', accessor: 'complement' },
+        { header: 'Produto', accessor: 'product' },
+        { header: 'Cliente', accessor: 'client' },
+        { header: 'Data da venda', accessor: 'sale_date' },
+        { header: 'Estado', accessor: 'sale_state' },
+        { header: 'Observação', accessor: 'observation' },
     ];
 
     const labels = ['Todos'];
@@ -56,7 +50,7 @@ function Fornecedor() {
     };
 
     const getFornecedorMutation = useMutation({
-        mutationFn: getSupplier,
+        mutationFn: getSale,
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['supplier'] });
 
@@ -72,7 +66,7 @@ function Fornecedor() {
     });
 
     const deleteFornecedorMutation = useMutation({
-        mutationFn: (id: string | number) => deleteSupplier(id),
+        mutationFn: (id: string | number) => deleteSale(id),
         onSuccess: () => {
             toast.success('Fornecedor excluído com sucesso!');
             queryClient.invalidateQueries({ queryKey: ['supplier'] });
@@ -82,15 +76,15 @@ function Fornecedor() {
         },
     });
 
-    const filteredSuppiler = suppliers?.filter((supplier: Filters) => {
-        const matchesName = supplier.company_name?.toLowerCase().includes(filters.company_name.toLowerCase());
-        const matchesCnpj = supplier.cnpj?.toLowerCase().includes(filters.cnpj.toLowerCase());
-        return matchesName && matchesCnpj;
-    });
-
     const handleDelete = (id: string | number) => {
         deleteFornecedorMutation.mutate(id);
     };
+
+    // const filteredStock = productWithSupplierNames?.filter((sale: Filters) => {
+    //     const matchesData = sale.sale_date?.toLowerCase().includes(filters.name.toLowerCase());
+    //     const matchesState = sale.sale_state?.toLowerCase().includes(filters.type.toLowerCase());
+    //     return matchesData && matchesState;
+    // });
 
     const handleFilterChange = (field: keyof Filters, value: string) => {
         setFilters((prevFilters) => ({ ...prevFilters, [field]: value }));
@@ -102,22 +96,22 @@ function Fornecedor() {
                 <Header />
                 <div className='container-pesquisa-inputs'>
                     <Pesquisa  
-                        title='Fornecedor' 
-                        searchPlaceholder='Nome' 
-                        searchValue={filters.company_name}
-                        searchChange={(e) => handleFilterChange('company_name', e.target.value)}
-                        placeholder='CNPJ' 
-                        value={filters.cnpj}
-                        onChange={(e) => handleFilterChange('cnpj', e.target.value)}
+                        title='Vendas' 
+                        // searchPlaceholder='Pesquisar' 
+                        // searchValue={filters.name}
+                        // searchChange={(e) => handleFilterChange('name', e.target.value)}
+                        // placeholder='Data da venda' 
+                        // value={filters.type}
+                        // onChange={(e) => handleFilterChange('type', e.target.value)}
                     />
-                    <Button className='botao-inputs' title='Novo fornecedor' icon='Plus' onPress={handleClick} />
+                    <Button className='botao-inputs' title='Nova venda' icon='Plus' onPress={handleClick} />
                 </div>
 
                 <div>
                     <Stepper labels={labels} selectedIndex={selectedTable} onStepChange={setSelectedTable} beforeColor='#FF698D' activeColor='#FF698D' />
 
                     {selectedTable === 0 && (
-                        <Table titleModal='fornecedor' columns={colunas} data={filteredSuppiler} onDelete={handleDelete}  onEdit={handleEdit} />
+                        <Table titleModal='venda' columns={colunas} data={suppliers} onDelete={handleDelete}  onEdit={handleEdit} />
                     )}
                 </div>
 
@@ -144,11 +138,11 @@ function Fornecedor() {
                     onClose={() => handleCloseModal()}
                     
                 >
-                    {isModalOpen && <CadastrarFornecedor onCloseModal={handleCloseModal} supplierId={selectedSupplierId}/>}
+                    {isModalOpen && <CadastrarVenda onCloseModal={handleCloseModal} saleId={selectedSupplierId}/>}
                 </DialogComponent>
             </div>
         </>
     );
 }
 
-export default Fornecedor;
+export default Vendas;

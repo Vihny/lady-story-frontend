@@ -7,11 +7,11 @@ export const schema = yup.object().shape({
 
   operation_type: yup.string()
     .required('O tipo é obrigatório')
-    .min(3, 'O tipo deve ter pelo menos 3 caracteres'),
+    .oneOf(['1', '2'], 'Selecione um tipo válido'),
 
   value: yup.string()
     .required('O valor é obrigatório')
-    .matches(/^\d+(\.\d{3})*(,\d{2})?$/, 'O valor deve estar no formato R$ X.XXX,XX')  // Expressão regular para validar formato monetário
+    .matches(/^\d+(\.\d{3})*(,\d{2})?$/, 'O valor deve estar no formato R$ X.XXX,XX')
     .test('is-valid-money', 'O valor deve estar no formato R$ X.XXX,XX', (value) => {
       if (value) {
         const sanitizedValue = value.replace(/[^\d,.-]/g, '').replace(',', '.');
@@ -23,4 +23,7 @@ export const schema = yup.object().shape({
   description: yup.string()
     .required('A descrição é obrigatório')
     .min(3, 'A descrição deve ter pelo menos 3 caracteres'),
+
+  sale_id: yup.number()
+    .required('A observação é obrigatório')
 });

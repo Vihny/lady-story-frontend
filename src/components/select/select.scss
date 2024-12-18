@@ -1,0 +1,43 @@
+.container-select {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 6px;
+
+    select {
+        text-decoration: none;
+        border: 1px solid #FF698D;
+        background-color: #fff;
+        border-radius: 12px;
+        width: 352px;
+        height: 40px;
+        padding: 0 12px;
+    
+        &::placeholder {
+            font-size: 14px;
+            color: #9F9F9F;
+        }
+    
+        &:focus {
+            outline: none;
+        }
+    }
+    
+    label {
+        display: flex;
+        justify-content: flex-start;
+        font-size: 14px;
+        font-weight: 600;
+        margin-left: 6px;
+    
+        span {
+            color: #C54545;
+        }
+    }
+
+    .error {
+        font-size: 12px;
+        font-weight: 600;
+        color: #C54545;
+    }
+}

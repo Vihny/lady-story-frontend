@@ -1,7 +1,8 @@
 export interface Sale {
-    operation_date?: string,
-    operation_type?: string,
-    value?: number,
-    description?: string,
-    sale_id?: number,
+    id?: number,
+    product?: string,
+    client?: string,
+    sale_date?: Date,
+    sale_state?: string,
+    observation?: string,
 }

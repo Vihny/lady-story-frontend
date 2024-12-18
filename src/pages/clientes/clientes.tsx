@@ -80,6 +80,12 @@ function Cliente() {
         deleteClienteMutation.mutate(id);
     };
 
+    const filteredCustomer = customers?.filter((customer: Filters) => {
+        const matchesName = customer.name?.toLowerCase().includes(filters.name.toLowerCase());
+        const matchesCpf = customer.cpf?.toLowerCase().includes(filters.cpf.toLowerCase());
+        return matchesName && matchesCpf;
+    });
+
     const handleFilterChange = (field: keyof Filters, value: string) => {
         setFilters((prevFilters) => ({ ...prevFilters, [field]: value }));
     };
@@ -91,12 +97,12 @@ function Cliente() {
             <div className='container-pesquisa-inputs'>
                 <Pesquisa 
                     title='Clientes' 
-                    placeholder='CPF' 
-                    value={filters.cpf}
-                    onChange={(e) => handleFilterChange('cpf', e.target.value)}
                     searchPlaceholder='Pesquisar' 
                     searchValue={filters.name}
                     searchChange={(e) => handleFilterChange('name', e.target.value)}
+                    placeholder='CPF' 
+                    value={filters.cpf}
+                    onChange={(e) => handleFilterChange('cpf', e.target.value)}
                 />
                 <Button className='botao-inputs' title='Novo cliente' icon='Plus' onPress={handleClick} />
             </div>
@@ -104,7 +110,7 @@ function Cliente() {
                 <Stepper labels={labels} selectedIndex={selectedTable} onStepChange={setSelectedTable} beforeColor='#FF698D' activeColor='#FF698D' />
 
                 {selectedTable === 0 && (
-                    <Table titleModal='cliente' columns={colunas}  data={customers}  onDelete={handleDelete} onEdit={handleEdit} />
+                    <Table titleModal='cliente' columns={colunas}  data={filteredCustomer}  onDelete={handleDelete} onEdit={handleEdit} />
                 )}
             </div>
             <div className='container-paginator'>

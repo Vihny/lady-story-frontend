@@ -84,17 +84,17 @@ function CadastrarFornecedor({ supplierId, onCloseModal }: CadastrarFornecedorPr
         <div className="container-fornecedor">
             <ToastContainer />
             <Cadastro text="Gerenciamento de Fornecedores" modulo={supplierId ? "Atualizar Fornecedor" : "Cadastrar Fornecedor"}>
-                <Input label='Nome da empresa' placeholder='Ex.: Camisa' type='text' {...register('company_name')} error={errors.company_name?.message} />
-                <Input label='Nome da negociação' placeholder='Ex.: Malha' type='text' {...register('trading_name')} error={errors.trading_name?.message} />
-                <Input label='CNPJ' placeholder='Ex.: Gola Polo' type='cnpj' {...register('cnpj')} error={errors.cnpj?.message} onChange={handleCnpjChange} value={cnpj} />
-                <Input label='Telefone' placeholder='Ex.: Adidas' type='phone' {...register('phone')} error={errors.phone?.message} onChange={handlePhoneChange} value={phone} />
-                <Input label='CEP' placeholder='Ex.: Adidas' type='cep' {...register('postal_code')} error={errors.postal_code?.message} onChange={handleCepChange} value={cep} />
-                <Input label='Estado' placeholder='Ex.: Adidas' type='text' {...register('state')} error={errors.state?.message} />
-                <Input label='Bairro' placeholder='Ex.: Adidas' type='text' {...register('neighborhood')} error={errors.neighborhood?.message} />
-                <Input label='Rua' placeholder='Ex.: Adidas' type='text' {...register('street')} error={errors.street?.message} />
-                <Input label='Número' placeholder='Ex.: Adidas' type='text' {...register('number')} error={errors.number?.message} />
-                <Input label='Cidade' placeholder='Ex.: Adidas' type='text' {...register('city')} error={errors.city?.message} />
-                <Input label='Complemento' placeholder='Ex.: Adidas' type='text' {...register('complement')} error={errors.complement?.message} />
+                <Input label='Nome da empresa' placeholder='Ex.: Adidas Company' type='text' {...register('company_name')} error={errors.company_name?.message} />
+                <Input label='Nome da negociação' placeholder='Ex.: Venda de Camisas' type='text' {...register('trading_name')} error={errors.trading_name?.message} />
+                <Input label='CNPJ' placeholder='Ex.: 00.000.000/0000-00' type='cnpj' {...register('cnpj')} error={errors.cnpj?.message} onChange={handleCnpjChange} value={cnpj} />
+                <Input label='Telefone' placeholder='Ex.: (77) 00000-0000' type='phone' {...register('phone')} error={errors.phone?.message} onChange={handlePhoneChange} value={phone} />
+                <Input label='CEP' placeholder='Ex.: 00000-000' type='cep' {...register('postal_code')} error={errors.postal_code?.message} onChange={handleCepChange} value={cep} />
+                <Input label='Estado' placeholder='Ex.: SP' type='text' {...register('state')} error={errors.state?.message} />
+                <Input label='Bairro' placeholder='Ex.: Av. Paulista' type='text' {...register('neighborhood')} error={errors.neighborhood?.message} />
+                <Input label='Rua' placeholder='Ex.: Rua paulistinha' type='text' {...register('street')} error={errors.street?.message} />
+                <Input label='Número' placeholder='Ex.: 09' type='text' {...register('number')} error={errors.number?.message} />
+                <Input label='Cidade' placeholder='Ex.: São Paulo' type='text' {...register('city')} error={errors.city?.message} />
+                <Input label='Complemento' placeholder='Ex.: Perto do campo' type='text' {...register('complement')} error={errors.complement?.message} />
                 
                 <Button icon={supplierId ? "Activity" : "PlusCircle"} title={supplierId ? "Atualizar" : "Cadastrar"}  className='btn-fornecedor' onPress={handleSubmit(onSubmit)} />
             </Cadastro>
