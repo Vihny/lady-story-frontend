@@ -90,9 +90,9 @@ function CadastrarFinanceiro({ financialId, onCloseModal }: CadastrarFinanceiroP
     
     const onSubmit = async (data: Financial) => {
         if (financialId) {
-            createFinanceiroMutation.mutate(data);
-        } else {
             updateFinanceiroMutation.mutate(data);
+        } else {
+            createFinanceiroMutation.mutate(data);
         }
     };
 
@@ -103,7 +103,7 @@ function CadastrarFinanceiro({ financialId, onCloseModal }: CadastrarFinanceiroP
             <Cadastro text="Gerenciamento de Receitas" modulo="Cadastrar Receita">
                 <Input label='Data da operação' placeholder='Ex.: Camisa' type='date' {...register('operation_date')} error={errors.operation_date?.message} />
                 <Select label='Tipo de operação' placeholder='Selecione uma tipo' maps={operationOptions} {...register('operation_type')} error={errors.operation_type?.message} />
-                <Input label='Valor' placeholder='Ex.: Gola Polo' type='text' {...register('value')} error={errors.value?.message} />
+                <Input label='Valor' placeholder='Ex.: Gola Polo' type='text' {...register('amount')} error={errors.amount?.message} />
                 <Input label='Descrição' placeholder='Ex.: Adidas' type='text' {...register('description')} error={errors.description?.message} />
                 <Select label='Venda' placeholder='Selecione um' maps={saleOptions} {...register('sale_id')} error={errors.sale_id?.message} />
 

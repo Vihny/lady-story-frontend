@@ -2,6 +2,8 @@
 import { Sale } from "../../interface/sale.interface.";
 import api from "../api";
 
+export const SALESPRODUCT: { saleId: number | string, products: number[] }[] = []
+
 export async function getSale() {
     const response = await api.get('sale');
     return response.data;

@@ -5,7 +5,6 @@ import Header from "../../components/header/header";
 import { Pagination } from "@mui/material";
 import Pesquisa from '../../components/pesquisa/pesquisa';
 import Button from '../../components/button/button';
-import { Filters } from '../../interface/filters/product-filters.interface';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import Stepper from '../../components/stepper/stepper'; 
 import { deleteFinancial, getFinancial } from '../../data/services/financial.service';
@@ -13,10 +12,11 @@ import { queryClient } from '../../lib/react-query';
 import { toast } from 'react-toastify';
 import CadastrarFinanceiro from '../cadastrar-financeiro/cadastrar-financeiro';
 import DialogComponent from '../../components/dialog/dialog';
+import { Filters } from '../../interface/filters/financial-filters.interface';
 
 function Financeiro() {
     const [selectedTable, setSelectedTable] = useState(0);
-    const [filters, setFilters] = useState<Filters>({ name: '', size: '' });
+    const [filters, setFilters] = useState<Filters>({ description: '', operation_type: '' });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedSupplierId, setSelectedSupplierId] = useState<string | number | null>(null);
     const { data: financials} = useQuery({
@@ -79,6 +79,12 @@ function Financeiro() {
         deleteFinanceiroMutation.mutate(id);
     };
 
+    const filteredFinancial = financials?.filter((financial: Filters) => {
+        const matchesName = financial.description?.toLowerCase().includes(filters.description.toLowerCase());
+        const matchesType = financial.operation_type?.toLowerCase().includes(filters.operation_type.toLowerCase());
+        return matchesName && matchesType;
+    });
+
     const handleFilterChange = (field: keyof Filters, value: string) => {
         setFilters((prevFilters) => ({ ...prevFilters, [field]: value }));
     };
@@ -90,9 +96,12 @@ function Financeiro() {
             <div className='container-pesquisa-inputs'>
             <Pesquisa  
                     title='Financeiro' 
-                    searchPlaceholder='Pesquisar' 
-                    searchValue={filters.name}
-                    searchChange={(e) => handleFilterChange('name', e.target.value)}
+                    searchPlaceholder='Descriçao' 
+                    searchValue={filters.description}
+                    searchChange={(e) => handleFilterChange('description', e.target.value)}
+                    placeholder='Tipo' 
+                    value={filters.operation_type}
+                    onChange={(e) => handleFilterChange('operation_type', e.target.value)}
                 />
                 <Button className='botao-inputs' title='Nova receita' icon='Plus' onPress={handleClick} />
             </div>
@@ -100,7 +109,7 @@ function Financeiro() {
                 <Stepper labels={labels} selectedIndex={selectedTable} onStepChange={setSelectedTable} beforeColor='#FF698D' activeColor='#FF698D' />
 
                 {selectedTable === 0 && (
-                    <Table titleModal='produto' columns={colunas}  data={financials}  onDelete={handleDelete} onEdit={handleEdit} />
+                    <Table titleModal='produto' columns={colunas}  data={filteredFinancial}  onDelete={handleDelete} onEdit={handleEdit} />
                 )}
             </div>
             <div className='container-paginator'>

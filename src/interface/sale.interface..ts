@@ -6,4 +6,6 @@ export interface Sale {
     sale_date?: Date,
     sale_state?: string,
     observation?: string,
+
+    products: number[]
 }
