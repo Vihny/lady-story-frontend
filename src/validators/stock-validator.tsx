@@ -21,6 +21,6 @@ export const schema = yup.object().shape({
     .required('A unidade é obrigatório')
     .min(1, 'A unidade deve ter pelo menos 3 caracteres'),
 
-  product_id: yup.string()
+  product_id: yup.number()
     .required('O produto é obrigatório')
 });

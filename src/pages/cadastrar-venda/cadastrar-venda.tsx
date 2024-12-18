@@ -12,6 +12,13 @@ import React from 'react';
 import { getSaleById, setSale, updateSale } from '../../data/services/sale.service';
 import { Sale } from '../../interface/sale.interface.';
 import { schema } from '../../validators/sale-validator';
+import Select from '../../components/select/select';
+import { getProduct } from '../../data/services/product.service';
+import { Product } from '../../interface/product.interface';
+import { getCustomer } from '../../data/services/customer.service';
+import { Customer } from '../../interface/customer.interface';
+import { Stock } from '../../interface/stock.interface';
+import { getStock } from '../../data/services/stock.service';
 
 interface CadastrarVendaProps {
     saleId: string | number | null;
@@ -33,11 +40,41 @@ function CadastrarVenda({ saleId, onCloseModal }: CadastrarVendaProps) {
         retryOnMount: true,
     });
 
+    const { data: products } = useQuery<Product[]>({
+        queryKey: ['product'],
+        queryFn: getProduct
+    });
+
+    const { data: customers } = useQuery<Customer[]>({
+        queryKey: ['customer'],
+        queryFn: getCustomer
+    });
+
+    const { data: stocks } = useQuery<Stock[]>({
+        queryKey: ['stock'],
+        queryFn: getStock
+    });
+
     React.useEffect(() => {
         if (saleId && !isFetching && isSuccess) {
-            reset(sales);
+
+            const selectedProduct = products?.find(product => product.id === sales?.product_id);
+            const selectedCustomer = customers?.find(customer => customer.id === sales?.customer_id);
+            const selectedStock = stocks?.find(stock => stock.id === sales?.stock_id);
+
+            const selectedSale = {
+                ...sales,
+                product_id: sales?.product_id,
+                customer_id: sales?.customer_id,
+                product_name: selectedProduct?.name,
+                customer_name: selectedCustomer?.name,
+                stock_id: sales?.stock_id,
+                stock_name: selectedStock?.name,
+            };
+
+            reset(selectedSale);
         }
-    }, [saleId, sales, isFetching, isSuccess, reset]);
+    }, [saleId, sales, products, stocks, customers, isFetching, isSuccess, reset]);
     
     const createVendaMutation = useMutation({
         mutationFn: setSale,
@@ -63,6 +100,21 @@ function CadastrarVenda({ saleId, onCloseModal }: CadastrarVendaProps) {
         },
     });
 
+    const productOptions = products?.map((product) => ({
+        value: product.id ? Number(product.id) : 0,
+        title: product.name ? String(product.name) : "",
+    })) || [];
+
+    const customerOptions = customers?.map((customer) => ({
+        value: customer.id ? Number(customer.id) : 0,
+        title: customer.name ? String(customer.name) : "",
+    })) || [];
+
+    const stockOptions = stocks?.map((stock) => ({
+        value: stock.id ? Number(stock.id) : 0,
+        title: stock.name ? String(stock.name) : "",
+    })) || [];
+
     const onSubmit = async (data: Sale) => {
         if (saleId) {
             updateVendaMutation.mutate(data);
@@ -76,8 +128,9 @@ function CadastrarVenda({ saleId, onCloseModal }: CadastrarVendaProps) {
         <div className="container-fornecedor">
             <ToastContainer />
             <Cadastro text="Gerenciamento de Vendas" modulo={saleId ? "Atualizar Venda" : "Cadastrar Venda"}>
-                <Input label='Nome do cliente' placeholder='Ex.: Maria' type='text' {...register('client')} error={errors.client?.message} />
-                <Input label='Nome do produto' placeholder='Ex.: Camisa de Malha' type='text' {...register('product')} error={errors.product?.message} />
+                <Select label='Cliente' placeholder='Selecione um' maps={customerOptions} {...register('customer_id')} error={errors.customer_id?.message} />
+                <Select label='Produto' placeholder='Selecione um' maps={productOptions} {...register('product_id')} error={errors.product_id?.message} />
+                <Select label='Estoque' placeholder='Selecione um' maps={stockOptions} {...register('stock_id')} error={errors.stock_id?.message} />
                 <Input label='Data da venda' type='date' {...register('sale_date')} error={errors.sale_date?.message} />
                 <Input label='Estado da venda' placeholder='Ex.: Concluído' type='text' {...register('sale_state')} error={errors.sale_state?.message} />
                 <Input label='Observação' placeholder='Ex.: Camisa com bordado' type='text' {...register('observation')} error={errors.observation?.message} />

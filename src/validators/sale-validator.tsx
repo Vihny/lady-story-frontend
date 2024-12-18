@@ -1,13 +1,14 @@
 import * as yup from 'yup';
 
 export const schema = yup.object().shape({
-  client: yup.string()
-    .required('O cliente é obrigatório')
-    .min(3, 'O cliente deve ter pelo menos 3 caracteres'),
+  customer_id: yup.number()
+    .required('O cliente é obrigatório'),
 
-  product: yup.string()
-    .required('O nome do produto é obrigatório')
-    .min(3, 'O nome do produto deve ter pelo menos 3 caracteres'),
+  product_id: yup.number()
+    .required('O produto é obrigatório'),
+
+  stock_id: yup.number()
+    .required('O estoque é obrigatório'),
 
   sale_state: yup.string()
     .required('O estado da venda é obrigatório')

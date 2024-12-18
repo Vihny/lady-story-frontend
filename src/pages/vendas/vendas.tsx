@@ -25,8 +25,6 @@ function Vendas() {
     });
 
     const colunas: Coluna[] = [
-        { header: 'Produto', accessor: 'product' },
-        { header: 'Cliente', accessor: 'client' },
         { header: 'Data da venda', accessor: 'sale_date' },
         { header: 'Estado', accessor: 'sale_state' },
         { header: 'Observação', accessor: 'observation' },

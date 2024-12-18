@@ -13,7 +13,7 @@ export async function getSaleById(id: number | string) {
 }
 
 export async function setSale(data: Sale) {
-    const response = await api.post('sale', data);
+    const response = await api.post('sale/', data);
     return response;
 }
 

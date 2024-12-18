@@ -104,10 +104,11 @@ function CadastrarProduto({ productId, onCloseModal }: CadastrarPordutoProps) {
             <ToastContainer />
             <Cadastro text="Gerenciamento de Produtos" modulo="Cadastrar Produto">
                 <Input label='Nome do Produto' placeholder='Ex.: Camisa' type='text' {...register('name')} error={errors.name?.message} />
-                <Input label='Tipo de Produto' placeholder='Ex.: Malha' type='text' {...register('type')} error={errors.type?.message} />
+                <Input label='Marca do Produto' placeholder='Ex.: Nike' type='text' {...register('brand')} error={errors.brand?.message} />
                 <Input label='Modelo do Produto' placeholder='Ex.: Gola Polo' type='text' {...register('model')} error={errors.model?.message} />
-                <Input label='Cor do Produto' placeholder='Ex.: Verde' type='text' {...register('color')} error={errors.color?.message} />
+                <Input label='Tipo de Produto' placeholder='Ex.: Malha' type='text' {...register('type')} error={errors.type?.message} />
                 <Input label='Tamanho do Produto' placeholder='Ex.: P' type='text' {...register('size')} error={errors.size?.message} />
+                <Input label='Cor do Produto' placeholder='Ex.: Verde' type='text' {...register('color')} error={errors.color?.message} />
                 <Input label='Preço do Produto' placeholder='Ex.: $80,00' type='price' {...register('price')} error={errors.price?.message} onChange={handlePriceChange} value={price} />
                 <Select label='Fornecedor' placeholder='Selecione um fornecedor' maps={supplierOptions} {...register('supplier_id')} error={errors.supplier_id?.message} />
 
