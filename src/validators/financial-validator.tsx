@@ -9,7 +9,7 @@ export const schema = yup.object().shape({
     .required('O tipo é obrigatório')
     .oneOf(['1', '2'], 'Selecione um tipo válido'),
 
-  amount: yup.number(),
+  value: yup.number(),
 
   description: yup.string()
     .required('A descrição é obrigatório')

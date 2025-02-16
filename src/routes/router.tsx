@@ -1,7 +1,7 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Produto from "../pages/produtos/produtos";
 import Cliente from "../pages/clientes/clientes";
-import Home from "../pages/home/home";
+import Home from "../pages/Home/Home";
 import SideNav from "../components/sidenav/sidenav";
 import Financeiro from "../pages/financeiro/financeiro";
 import Estoque from "../pages/estoque/estoque";

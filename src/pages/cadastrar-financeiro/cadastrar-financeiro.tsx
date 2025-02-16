@@ -89,10 +89,19 @@ function CadastrarFinanceiro({ financialId, onCloseModal }: CadastrarFinanceiroP
     ]
     
     const onSubmit = async (data: Financial) => {
+        const formattedData = {
+            ...data,
+            operation_date: data.operation_date
+                ? typeof data.operation_date === 'string'
+                    ? data.operation_date.split('T')[0]  // Formata como 'YYYY-MM-DD'
+                    : data.operation_date.toISOString().split('T')[0]  // Formata como 'YYYY-MM-DD'
+                : '',  // Se não houver data, retorna uma string vazia
+        };
+    
         if (financialId) {
-            updateFinanceiroMutation.mutate(data);
+            updateFinanceiroMutation.mutate(formattedData);
         } else {
-            createFinanceiroMutation.mutate(data);
+            createFinanceiroMutation.mutate(formattedData);
         }
     };
 
@@ -103,8 +112,8 @@ function CadastrarFinanceiro({ financialId, onCloseModal }: CadastrarFinanceiroP
             <Cadastro text="Gerenciamento de Receitas" modulo="Cadastrar Receita">
                 <Input label='Data da operação' placeholder='Ex.: Camisa' type='date' {...register('operation_date')} error={errors.operation_date?.message} />
                 <Select label='Tipo de operação' placeholder='Selecione uma tipo' maps={operationOptions} {...register('operation_type')} error={errors.operation_type?.message} />
-                <Input label='Valor' placeholder='Ex.: Gola Polo' type='text' {...register('amount')} error={errors.amount?.message} />
-                <Input label='Descrição' placeholder='Ex.: Adidas' type='text' {...register('description')} error={errors.description?.message} />
+                <Input label='Valor' placeholder='Ex.: $80,00' type='number' {...register('value')} error={errors.value?.message} />
+                <Input label='Descrição' placeholder='Ex.: 	Pagamento Realizado' type='text' {...register('description')} error={errors.description?.message} />
                 <Select label='Venda' placeholder='Selecione um' maps={saleOptions} {...register('sale_id')} error={errors.sale_id?.message} />
 
                 <Button icon={financialId ? "Activity" : "PlusCircle"} title={financialId ? "Atualizar" : "Cadastrar"} className="btn-financeiro" onPress={handleSubmit(onSubmit)} />

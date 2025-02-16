@@ -98,11 +98,11 @@ function CadastrarEstoque({ stockId, onCloseModal }: CadastrarEstoqueProps) {
         <div className="container-estoque">
             <ToastContainer />
             <Cadastro text="Gerenciamento de Estoque" modulo={stockId ? "Atualizar Estoque" : "Cadastrar Estoque"}>
-                <Input label='Nome' placeholder='Ex.: Camisa' type='text' {...register('name')} error={errors.name?.message} />
-                <Input label='Unidade' placeholder='Ex.: Malha' type='text' {...register('unit')} error={errors.unit?.message} />
-                <Input label='Quantidade' placeholder='Ex.: Gola Polo' type='text' {...register('quantity')} error={errors.quantity?.message} />
-                <Input label='Código' placeholder='Ex.: Adidas' type='text' {...register('code')} error={errors.code?.message} />
-                <Input label='Complemento' placeholder='Ex.: Adidas' type='text' {...register('complement')} error={errors.complement?.message} />
+                <Input label='Nome' placeholder='Ex.: Estoque de Camisa' type='text' {...register('name')} error={errors.name?.message} />
+                <Input label='Unidade' placeholder='Ex.: Unidade' type='text' {...register('unit')} error={errors.unit?.message} />
+                <Input label='Quantidade' placeholder='Ex.: 30' type='text' {...register('quantity')} error={errors.quantity?.message} />
+                <Input label='Código' placeholder='Ex.: EXP123' type='text' {...register('code')} error={errors.code?.message} />
+                <Input label='Complemento' placeholder='Ex.: Coleção Verão' type='text' {...register('complement')} error={errors.complement?.message} />
                 <Select label='Produto' placeholder='Selecione um produto' maps={productOptions} {...register('product_id')} error={errors.product_id?.message} />
                 
                 <Button icon={stockId ? "Activity" : "PlusCircle"} title={stockId ? "Atualizar" : "Cadastrar"}  className='btn-estoque' onPress={handleSubmit(onSubmit)} />

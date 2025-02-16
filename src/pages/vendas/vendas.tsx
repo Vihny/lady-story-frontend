@@ -19,7 +19,7 @@ function Vendas() {
     const [filters, setFilters] = useState({ sale_date: '', sale_state: '' });
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedSupplierId, setSelectedSupplierId] = useState<string | number | null>(null);
-    const { data: suppliers } = useQuery({
+    const { data: sales } = useQuery({
         queryKey: ['supplier'],
         queryFn: getSale,
     });
@@ -78,11 +78,11 @@ function Vendas() {
         deleteFornecedorMutation.mutate(id);
     };
 
-    // const filteredStock = productWithSupplierNames?.filter((sale: Filters) => {
-    //     const matchesData = sale.sale_date?.toLowerCase().includes(filters.name.toLowerCase());
-    //     const matchesState = sale.sale_state?.toLowerCase().includes(filters.type.toLowerCase());
-    //     return matchesData && matchesState;
-    // });
+    const filteredSales = sales?.filter((sale: Filters) => {
+        const matchesDate = sale.sale_date?.toLowerCase().includes(filters.sale_date.toLowerCase());
+        const matchesState = sale.sale_state?.toLowerCase().includes(filters.sale_state.toLowerCase());
+        return matchesDate && matchesState;
+    });
 
     const handleFilterChange = (field: keyof Filters, value: string) => {
         setFilters((prevFilters) => ({ ...prevFilters, [field]: value }));
@@ -95,12 +95,12 @@ function Vendas() {
                 <div className='container-pesquisa-inputs'>
                     <Pesquisa  
                         title='Vendas' 
-                        // searchPlaceholder='Pesquisar' 
-                        // searchValue={filters.name}
-                        // searchChange={(e) => handleFilterChange('name', e.target.value)}
-                        // placeholder='Data da venda' 
-                        // value={filters.type}
-                        // onChange={(e) => handleFilterChange('type', e.target.value)}
+                        searchPlaceholder='Data' 
+                        searchValue={filters.sale_date}
+                        searchChange={(e) => handleFilterChange('sale_date', e.target.value)}
+                        placeholder='Status da venda' 
+                        value={filters.sale_state}
+                        onChange={(e) => handleFilterChange('sale_state', e.target.value)}
                     />
                     <Button className='botao-inputs' title='Nova venda' icon='Plus' onPress={handleClick} />
                 </div>
@@ -109,7 +109,7 @@ function Vendas() {
                     <Stepper labels={labels} selectedIndex={selectedTable} onStepChange={setSelectedTable} beforeColor='#FF698D' activeColor='#FF698D' />
 
                     {selectedTable === 0 && (
-                        <Table titleModal='venda' columns={colunas} data={suppliers} onDelete={handleDelete}  onEdit={handleEdit} />
+                        <Table titleModal='venda' columns={colunas} data={filteredSales} onDelete={handleDelete}  onEdit={handleEdit} />
                     )}
                 </div>
 

@@ -116,10 +116,19 @@ function CadastrarVenda({ saleId, onCloseModal }: CadastrarVendaProps) {
     })) || [];
 
     const onSubmit = async (data: Sale) => {
+        const formattedData = {
+            ...data,
+            sale_date: data.sale_date
+                ? typeof data.sale_date === 'string'
+                    ? data.sale_date.split('T')[0]
+                    : data.sale_date.toISOString().split('T')[0]
+                : '',
+        };
+
         if (saleId) {
-            updateVendaMutation.mutate(data);
+            updateVendaMutation.mutate(formattedData);
         } else {
-            createVendaMutation.mutate(data);
+            createVendaMutation.mutate(formattedData);
         }
     };
 
