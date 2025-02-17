@@ -40,5 +40,5 @@ Bem-vindo ao Sistema de Gerenciamento de Loja de Roupas! Este é um aplicativo f
 `cd lady-store`
 `npm install`
 
-3-  Inicie o projeto 
+3-  Inicie o projeto  
 `npm run dev`
